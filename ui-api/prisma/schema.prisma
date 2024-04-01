@@ -1,0 +1,165 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  name          String
+  email         String    @id @unique
+  password      String?
+  student       Student?
+  teacher       Teacher?
+  verifiedToken String?
+  tokenExpiry   DateTime?
+  isVerified    Boolean
+}
+
+model Student {
+  id          Int          @id @default(autoincrement())
+  experiments Experiment[]
+  courses     Course[]
+  requests    Request[]
+  user        User         @relation(fields: [userEmail], references: [email])
+  userEmail   String       @unique
+}
+
+model Teacher {
+  id         Int      @id @default(autoincrement())
+  courses    Course[]
+  user       User     @relation(fields: [userEmail], references: [email])
+  userEmail  String   @unique
+  authorized Boolean
+}
+
+model Course {
+  id          Int          @id @default(autoincrement())
+  name        String
+  teacher     Teacher?     @relation(fields: [teacherId], references: [userEmail], onDelete: Cascade)
+  teacherId   String?
+  students    Student[]
+  requests    Request[]
+  Experiment  Experiment[]
+  startDate   String
+  endDate     String
+  description String
+}
+
+model Request {
+  id           Int      @id @default(autoincrement())
+  course       Course?  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId     Int?
+  student      Student? @relation(fields: [studentEmail], references: [userEmail], onDelete: Cascade)
+  studentEmail String?
+  status       String
+}
+
+model Experiment {
+  id             Int       @id @default(autoincrement())
+  name           String
+  experimentDate String
+  experimentTime String
+  timezone       String
+  student        Student?  @relation(fields: [studentEmail], references: [userEmail], onDelete: Cascade)
+  studentEmail   String?
+  cityLabs       CityLab[]
+  course         Course?   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId       Int?
+  modified       DateTime  @updatedAt
+}
+
+model CityLab {
+  id             String      @id
+  departmentName String
+  experiment     Experiment? @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+  experimentId   Int?
+  activities     Activity[]
+}
+
+model Activity {
+  id                   String            @id
+  activityNumber       Int
+  panelAngle           Int?
+  temperature          Float?
+  power                Float?
+  efficiencyPorcentaje Float?
+  optimalAngle         Float?
+  uvaRadiation         Float?
+  radiation            Float?
+  cityLab              CityLab?          @relation(fields: [cityLabId], references: [id], onDelete: Cascade)
+  cityLabId            String?
+  efficiencyCurve      EfficiencyCurve[]
+}
+
+model EfficiencyCurve {
+  id                Int                @id @default(autoincrement())
+  efficiencyRecords EfficiencyRecord[]
+  activity          Activity?          @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  activityId        String?
+}
+
+model EfficiencyRecord {
+  id                Int              @id @default(autoincrement())
+  current           Float
+  voltage           Float
+  power             Float
+  city              String
+  degree            Int?
+  radiation         Float?
+  temperature       Float?
+  datetime          DateTime?
+  timestamp         String?
+  uvaRadiation      Float?
+  efficiencyCurve   EfficiencyCurve? @relation(fields: [efficiencyCurveId], references: [id], onDelete: Cascade)
+  efficiencyCurveId Int?
+}
+
+model Datalogger {
+  id                   Int    @id @default(autoincrement())
+  datetime             String
+  record               Int
+  solarRadiationCMP    Float?
+  solarRadiationCMPAvg Float?
+  uvaRadiationLP       Float?
+  uvaRadiationLPAvg    Float?
+  batteryVoltage       Float?
+  voltage              Float?
+  current              Float?
+  solarRadiationCS320  Float?
+  uvaRadiationSU202    Float?
+  uvaRadiationSU202Avg Float?
+}
+
+model DataloggerLPZ {
+  id                     Int    @id @default(autoincrement())
+  datetime               String
+  record                 Int
+  solarRadiationCS320    Float?
+  solarRadiationCS320Avg Float?
+  uvaRadiationSU202      Float?
+  uvaRadiationSU202Avg   Float?
+  voltage                Float?
+  current                Float?
+  angle                  Float?
+  batteryVoltage         Float?
+  tempDL                 Float?
+}
+
+model DataloggerSCZ {
+  id                     Int    @id @default(autoincrement())
+  datetime               String
+  record                 Int
+  solarRadiationCS320    Float?
+  solarRadiationCS320Avg Float?
+  uvaRadiationSU202      Float?
+  uvaRadiationSU202Avg   Float?
+  voltage                Float?
+  current                Float?
+  angle                  Float?
+  batteryVoltage         Float?
+  tempDL                 Float?
+}
