@@ -328,13 +328,13 @@ export default function DepartamentExperiment({
 
 	const sendMqttMessage = async (action) => {
 		var department = name;
-		/*if (action == 'START' && radiation < 200) {
+		if (action == 'START' && radiation < 200) {
 			activities.loading = false;
 			setExperimentLoading(false);
 			toast.info(
 				'You can only perform Efficiency Experiments when radiation is greater than 200'
 			);
-		} else {*/
+		} else {
 		if (syncPanels && action != 'START') {
 			department = 'ALL';
 		} else {
@@ -399,6 +399,7 @@ export default function DepartamentExperiment({
 			//envvariable
 			window.open(
 				'http://admin:Pass1234@research.upb.edu:60081/cgi-bin/mjpg/video.cgi?channel=1&subtype=1',
+				'newwindow',
 				'width=500, height=600, top=100'
 			);
 		}
