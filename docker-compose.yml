@@ -72,8 +72,9 @@ services:
         max-size: "10m"
         max-file: "3"
   grafana:
-    image: "grafana/grafana:9.4.14-ubuntu"
     container_name: SolarLab_Grafana
+    build:
+      context: ./Grafana
     restart: always
     ports:
       - 8000:8000
@@ -84,7 +85,7 @@ services:
       database:
         condition: service_healthy
     volumes:
-      - ./GrafanaData:/var/lib/grafana
+      - ./Grafana/data:/var/lib/grafana
     logging:
       options:
         max-size: "10m"

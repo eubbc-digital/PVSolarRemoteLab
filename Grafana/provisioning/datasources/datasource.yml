@@ -1,0 +1,26 @@
+# config file version
+apiVersion: 1
+
+# list of datasources to insert/update
+deleteDatasources:
+  - name: mysql
+datasources:
+  # <string, required> name of the datasource. Required
+  - name: mysql
+    # <string, required> datasource type. Required
+    type: mysql
+    # <string, required> access mode. proxy or direct (Server or Browser in the UI). Required
+    # <string> url
+    url: SolarLab_Database:3306
+    user: root
+    # <string> database name
+    database: solar_lab_db
+    # <bool> mark as default datasource. Max one per org
+    isDefault: true
+    # <map> fields that will be converted to json and stored in jsonData
+    secureJsonData:
+      # <string> database password, if used
+      password: "root"
+    version: 1
+    # <bool> allow users to edit datasources from the UI.
+    editable: true
