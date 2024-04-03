@@ -148,8 +148,9 @@ export default function DepartamentExperiment({
 
 	useEffect(() => {
 		clearFields();
-		//envvariable
-		const socket = io(`ws://research.upb.edu:4000`);
+		const socket = io(
+			`ws://${process.env.NEXT_PUBLIC_HOST}:${process.env.NEXT_PUBLIC_WS_SERVER_PORT}`
+		);
 		socket.on('esp32', (...msg) => {
 			dataHandler(msg);
 		});
@@ -382,23 +383,20 @@ export default function DepartamentExperiment({
 
 	const handleOpenCamera = () => {
 		if (name == 'Cochabamba') {
-			//envvariable
 			window.open(
-				'http://admin:Pass1234@research.upb.edu:60080/cgi-bin/mjpg/video.cgi?channel=1&subtype=1',
+				process.env.NEXT_PUBLIC_LINKCAMERACBBA,
 				'newwindow',
 				'width=500, height=600, top=100'
 			);
 		} else if (name == 'La Paz') {
-			//envvariable
 			window.open(
-				'http://admin:admin@research.upb.edu:60083/cgi-bin/mjpg/video.cgi?channel=1&subtype=1',
+				process.env.NEXT_PUBLIC_LINKCAMERALPZ,
 				'newwindow',
 				'width=500, height=600, top=100'
 			);
 		} else {
-			//envvariable
 			window.open(
-				'http://admin:Pass1234@research.upb.edu:60081/cgi-bin/mjpg/video.cgi?channel=1&subtype=1',
+				process.env.NEXT_PUBLIC_LINKCAMERASCZ,
 				'newwindow',
 				'width=500, height=600, top=100'
 			);

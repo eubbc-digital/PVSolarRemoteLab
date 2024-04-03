@@ -9,6 +9,9 @@ import Footer from '@/components/Footer';
 import React from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { ToastContainer, toast } from 'react-toastify';
+import { config } from 'dotenv';
+
+config();
 
 const lato = Lato({
 	subsets: ['latin'],

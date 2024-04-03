@@ -9,24 +9,32 @@ export default function StreamPlayer({ name }) {
 
 	const handlerPlayer = () => {
 		if (name === 'Cochabamba') {
-			//envvariable
 			const { JSMpeg } = require('../scripts/jsmpeg.min.js');
-			player = new JSMpeg.Player(`ws://research.upb.edu:8888`, {
-				canvas: streamRef.current,
-				audio: false,
-			});
+			player = new JSMpeg.Player(
+				`ws://${process.env.NEXT_PUBLIC_HOST}:${process.env.NEXT_PUBLIC_WSPORTCBBA}`,
+				{
+					canvas: streamRef.current,
+					audio: false,
+				}
+			);
 		} else if (name === 'Santa Cruz') {
 			const { JSMpeg } = require('../scripts/jsmpeg.min.js');
-			player = new JSMpeg.Player(`ws://research.upb.edu:9999`, {
-				canvas: streamRef.current,
-				audio: false,
-			});
+			player = new JSMpeg.Player(
+				`ws://${process.env.NEXT_PUBLIC_HOST}:${process.env.NEXT_PUBLIC_WSPORTSCZ}`,
+				{
+					canvas: streamRef.current,
+					audio: false,
+				}
+			);
 		} else {
 			const { JSMpeg } = require('../scripts/jsmpeg.min.js');
-			player = new JSMpeg.Player(`ws://research.upb.edu:7777`, {
-				canvas: streamRef.current,
-				audio: false,
-			});
+			player = new JSMpeg.Player(
+				`ws://${process.env.NEXT_PUBLIC_HOST}:${process.env.NEXT_PUBLIC_WSPORTLPZ}`,
+				{
+					canvas: streamRef.current,
+					audio: false,
+				}
+			);
 		}
 	};
 

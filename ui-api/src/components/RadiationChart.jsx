@@ -39,10 +39,7 @@ export default function RadiationChart({ title, city, type }) {
 	const [grafanaLink, setGrafanaLink] = useState([]);
 
 	useEffect(() => {
-		//envvariable
-		setGrafanaLink(
-			'http://research.upb.edu:8000/d/BFHsoFzIz/upb-remote-solar-lab?orgId=1&from=now-2d&to=now'
-		);
+		setGrafanaLink(process.env.NEXT_PUBLIC_GRAFANA_LINK);
 
 		loadTodayData();
 		loadSeasonalData();
