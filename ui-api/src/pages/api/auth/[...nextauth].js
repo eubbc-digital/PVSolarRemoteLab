@@ -13,7 +13,7 @@ export const authOptions = {
 					password: credentials.password,
 				};
 				const response = await fetch(
-					`http://${process.env.NEXT_PUBLIC_HOST}:${process.env.REACT_APP_PORT}/solar-lab/api/login`,
+					`https://${process.env.NEXT_PUBLIC_HOST}:${process.env.REACT_APP_PORT}/solar-lab/api/login`,
 					{
 						headers: {
 							'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const authOptions = {
 		async signIn({ account, profile }) {
 			if (account.provider == 'google') {
 				const response = await fetch(
-					`http://${process.env.NEXT_PUBLIC_HOST}:${process.env.REACT_APP_PORT}/solar-lab/api/users/exists`,
+					`https://${process.env.NEXT_PUBLIC_HOST}:${process.env.REACT_APP_PORT}/solar-lab/api/users/exists`,
 					{
 						headers: {
 							'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export const authOptions = {
 						return true;
 					} else {
 						const response = await fetch(
-							`http://${process.env.NEXT_PUBLIC_HOST}:${process.env.REACT_APP_PORT}/solar-lab/api/google/create`,
+							`https://${process.env.NEXT_PUBLIC_HOST}:${process.env.REACT_APP_PORT}/solar-lab/api/google/create`,
 							{
 								headers: {
 									'Content-Type': 'application/json',
