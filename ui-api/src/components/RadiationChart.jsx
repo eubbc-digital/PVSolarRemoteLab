@@ -39,11 +39,24 @@ export default function RadiationChart({ title, city, type }) {
 	const [grafanaLink, setGrafanaLink] = useState([]);
 
 	useEffect(() => {
-		setGrafanaLink(process.env.NEXT_PUBLIC_GRAFANA_LINK);
-
+		getEnvVariables();
 		loadTodayData();
 		loadSeasonalData();
 	}, []);
+
+	const getEnvVariables = async () => {
+		const request = await fetch(`/solar-lab/api/env`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'GET',
+		});
+
+		const response = await request.json();
+		if (response.status) {
+			setGrafanaLink(response.variables.NEXT_PUBLIC_GRAFANA_LINK);
+		}
+	};
 
 	const loadTodayData = async () => {
 		let data = [];

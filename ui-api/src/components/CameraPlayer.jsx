@@ -6,45 +6,68 @@ import { toast } from 'react-toastify';
 
 export default function StreamPlayer({ name }) {
 	let player;
+	const [env, setEnv] = useState(null);
 
 	const handlerPlayer = () => {
-		if (name === 'Cochabamba') {
-			const { JSMpeg } = require('../scripts/jsmpeg.min.js');
-			player = new JSMpeg.Player(
-				`ws://${process.env.NEXT_PUBLIC_HOST}:${process.env.NEXT_PUBLIC_WSPORTCBBA}`,
-				{
-					canvas: streamRef.current,
-					audio: false,
-				}
-			);
-		} else if (name === 'Santa Cruz') {
-			const { JSMpeg } = require('../scripts/jsmpeg.min.js');
-			player = new JSMpeg.Player(
-				`ws://${process.env.NEXT_PUBLIC_HOST}:${process.env.NEXT_PUBLIC_WSPORTSCZ}`,
-				{
-					canvas: streamRef.current,
-					audio: false,
-				}
-			);
-		} else {
-			const { JSMpeg } = require('../scripts/jsmpeg.min.js');
-			player = new JSMpeg.Player(
-				`ws://${process.env.NEXT_PUBLIC_HOST}:${process.env.NEXT_PUBLIC_WSPORTLPZ}`,
-				{
-					canvas: streamRef.current,
-					audio: false,
-				}
-			);
+		if (env) {
+			if (name === 'Cochabamba') {
+				const { JSMpeg } = require('../scripts/jsmpeg.min.js');
+				player = new JSMpeg.Player(
+					`ws://${env.NEXT_PUBLIC_HOST}:${env.NEXT_PUBLIC_WSPORTCBBA}`,
+					{
+						canvas: streamRef.current,
+						audio: false,
+					}
+				);
+			} else if (name === 'Santa Cruz') {
+				const { JSMpeg } = require('../scripts/jsmpeg.min.js');
+				player = new JSMpeg.Player(
+					`ws://${env.NEXT_PUBLIC_HOST}:${env.NEXT_PUBLIC_WSPORTSCZ}`,
+					{
+						canvas: streamRef.current,
+						audio: false,
+					}
+				);
+			} else {
+				const { JSMpeg } = require('../scripts/jsmpeg.min.js');
+				player = new JSMpeg.Player(
+					`ws://${env.NEXT_PUBLIC_HOST}:${env.NEXT_PUBLIC_WSPORTLPZ}`,
+					{
+						canvas: streamRef.current,
+						audio: false,
+					}
+				);
+			}
+		}
+	};
+
+	const getEnvVariables = async () => {
+		const request = await fetch(`/solar-lab/api/env`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'GET',
+		});
+
+		const response = await request.json();
+		if (response.status) {
+			setEnv(response.variables);
 		}
 	};
 
 	const streamRef = useRef(null);
 
 	useEffect(() => {
-		handlerPlayer();
-		return () => {
-			player.destroy();
-		};
+		if (env) {
+			handlerPlayer();
+			return () => {
+				player.destroy();
+			};
+		}
+	}, [env]);
+
+	useEffect(() => {
+		getEnvVariables();
 	}, []);
 
 	return (

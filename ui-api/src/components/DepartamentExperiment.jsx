@@ -115,13 +115,28 @@ export default function DepartamentExperiment({
 
 	const [experimentLoading, setExperimentLoading] = React.useState(false);
 	const [dataLoading, setDataLoading] = React.useState(true);
+	const [env, setEnv] = useState(null);
 
 	const handleChangeTabs = (event, newValue) => {
 		setValue(newValue);
 		activities.tabIndex = newValue;
 	};
+	const getEnvVariables = async () => {
+		const request = await fetch(`/solar-lab/api/env`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'GET',
+		});
+
+		const response = await request.json();
+		if (response.status) {
+			setEnv(response.variables);
+		}
+	};
 
 	useEffect(() => {
+		getEnvVariables();
 		if (name == 'Cochabamba') {
 			setTypeRadiation('solarRadiationCMPAvg');
 			setTypeUVAradiation('uvaRadiationLPAvg');
@@ -147,18 +162,21 @@ export default function DepartamentExperiment({
 	}, [dataLoading]);
 
 	useEffect(() => {
-		clearFields();
-		const socket = io(
-			`ws://${process.env.NEXT_PUBLIC_HOST}:${process.env.NEXT_PUBLIC_WS_SERVER_PORT}`
-		);
-		socket.on('esp32', (...msg) => {
-			dataHandler(msg);
-		});
-		return () => {
-			socket.disconnect();
-			updateCityData(name, 0, 0, 0, 0, 0, []);
-		};
-	}, []);
+		if (env) {
+			console.log('inside socket' + env.NEXT_PUBLIC_HOST);
+			clearFields();
+			const socket = io(
+				`ws://${env.NEXT_PUBLIC_HOST}:${env.NEXT_PUBLIC_WS_SERVER_PORT}`
+			);
+			socket.on('esp32', (...msg) => {
+				dataHandler(msg);
+			});
+			return () => {
+				socket.disconnect();
+				updateCityData(name, 0, 0, 0, 0, 0, []);
+			};
+		}
+	}, [env]);
 
 	const clearFields = () => {
 		clearActivity1();
@@ -384,19 +402,19 @@ export default function DepartamentExperiment({
 	const handleOpenCamera = () => {
 		if (name == 'Cochabamba') {
 			window.open(
-				process.env.NEXT_PUBLIC_LINKCAMERACBBA,
+				env.NEXT_PUBLIC_LINKCAMERACBBA,
 				'newwindow',
 				'width=500, height=600, top=100'
 			);
 		} else if (name == 'La Paz') {
 			window.open(
-				process.env.NEXT_PUBLIC_LINKCAMERALPZ,
+				env.NEXT_PUBLIC_LINKCAMERALPZ,
 				'newwindow',
 				'width=500, height=600, top=100'
 			);
 		} else {
 			window.open(
-				process.env.NEXT_PUBLIC_LINKCAMERASCZ,
+				env.NEXT_PUBLIC_LINKCAMERASCZ,
 				'newwindow',
 				'width=500, height=600, top=100'
 			);
