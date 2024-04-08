@@ -4,7 +4,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 export default function GoogleButton() {
 	const handleGoogleAuth = async () => {
-		signIn('google', { redirect: false })
+		toast.warning('Temporarily Disabled, Please try another method!');
+		/*signIn('google', { redirect: false })
 			.then((response) => {
 				if (response.ok) {
 					toast.success('Success!, Go to your Email and Verify it!');
@@ -16,7 +17,7 @@ export default function GoogleButton() {
 			})
 			.catch((error) => {
 				toast.info(error);
-			});
+			});*/
 	};
 	return (
 		<Button

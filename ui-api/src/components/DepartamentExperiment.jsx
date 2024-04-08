@@ -163,7 +163,6 @@ export default function DepartamentExperiment({
 
 	useEffect(() => {
 		if (env) {
-			console.log('inside socket' + env.NEXT_PUBLIC_HOST);
 			clearFields();
 			const socket = io(
 				`ws://${env.NEXT_PUBLIC_HOST}:${env.NEXT_PUBLIC_WS_SERVER_PORT}`
@@ -347,32 +346,32 @@ export default function DepartamentExperiment({
 
 	const sendMqttMessage = async (action) => {
 		var department = name;
-		/*if (action == 'START' && radiation < 200) {
+		if (action == 'START' && radiation < 150) {
 			activities.loading = false;
 			setExperimentLoading(false);
 			toast.info(
-				'You can only perform Efficiency Experiments when radiation is greater than 200'
+				'You can only perform Efficiency Experiments when radiation is greater than 150'
 			);
-		} else {*/
-		if (syncPanels && action != 'START') {
-			department = 'ALL';
 		} else {
-			selectedAngle = departmentSelectedAngle;
+			if (syncPanels && action != 'START') {
+				department = 'ALL';
+			} else {
+				selectedAngle = departmentSelectedAngle;
+			}
+			const message = {
+				action: action,
+				angle: selectedAngle,
+				department: department,
+			};
+			const response = await fetch(`/solar-lab/api/mqtt/send`, {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				method: 'POST',
+				body: JSON.stringify(message),
+			});
+			const data = await response.json();
 		}
-		const message = {
-			action: action,
-			angle: selectedAngle,
-			department: department,
-		};
-		const response = await fetch(`/solar-lab/api/mqtt/send`, {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			method: 'POST',
-			body: JSON.stringify(message),
-		});
-		const data = await response.json();
-		//}
 	};
 
 	const waitingExperiment = () => {

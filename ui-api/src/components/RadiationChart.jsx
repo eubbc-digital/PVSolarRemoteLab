@@ -113,11 +113,11 @@ export default function RadiationChart({ title, city, type }) {
 			},
 			{
 				name: 'Summer',
-				date: new Date('02/28/2023').toISOString().split('T')[0],
+				date: new Date('01/09/2024').toISOString().split('T')[0],
 			},
 			{
 				name: 'Autumn',
-				date: new Date('05/21/2023').toISOString().split('T')[0],
+				date: new Date('03/29/2024').toISOString().split('T')[0],
 			},
 			{
 				name: 'Winter',
@@ -151,7 +151,7 @@ export default function RadiationChart({ title, city, type }) {
 			dayjs(todayDate).isAfter('3/20/2023') &&
 			dayjs(todayDate).isBefore('6/21/2023')
 		) {
-			return new Date('5/21/2023').toISOString().split('T')[0];
+			return new Date('03/29/2024').toISOString().split('T')[0];
 		} else if (
 			dayjs(todayDate).isAfter('6/20/2023') &&
 			dayjs(todayDate).isBefore('9/21/2023')
@@ -163,7 +163,7 @@ export default function RadiationChart({ title, city, type }) {
 		) {
 			return new Date('11/30/2022').toISOString().split('T')[0];
 		} else {
-			return new Date('2/28/2023').toISOString().split('T')[0];
+			return new Date('01/09/2024').toISOString().split('T')[0];
 		}
 	};
 

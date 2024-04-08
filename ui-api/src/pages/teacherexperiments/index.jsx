@@ -161,7 +161,11 @@ export default function Teacherexperiments() {
 						(experiment) => experiment.courseId == selectedCourse
 					)
 				) {
-					setExperiment(student.experiments[0]);
+					setExperiment(
+						student.experiments.filter(
+							(experiment) => experiment.courseId == selectedCourse
+						)[0]
+					);
 				} else {
 					setExperiment(undefined);
 				}
@@ -282,7 +286,7 @@ export default function Teacherexperiments() {
 	}, [status]);
 
 	useEffect(() => {
-		if (experiment.cityLabs) {
+		if (selectedStudentEmail != '') {
 			filterActivities(1);
 			setSelectedActivity(1);
 		}
