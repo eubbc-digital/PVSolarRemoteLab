@@ -13,7 +13,7 @@ export default function StreamPlayer({ name }) {
       if (name === 'Cochabamba') {
         const { JSMpeg } = require('../scripts/jsmpeg.min.js');
         player = new JSMpeg.Player(
-          'ws://localhost/solar-lab/camera-cbba',
+          'wss://eubbc-digital.upb.edu/solar-lab/camera-cbba',
           {
             canvas: streamRef.current,
             audio: false,
@@ -22,7 +22,7 @@ export default function StreamPlayer({ name }) {
       } else if (name === 'Santa Cruz') {
         const { JSMpeg } = require('../scripts/jsmpeg.min.js');
         player = new JSMpeg.Player(
-          'ws://localhost/solar-lab/camera-scz',
+          'wss://eubbc-digital.upb.edu/solar-lab/camera-scz',
           {
             canvas: streamRef.current,
             audio: false,
@@ -31,7 +31,7 @@ export default function StreamPlayer({ name }) {
       } else {
         const { JSMpeg } = require('../scripts/jsmpeg.min.js');
         player = new JSMpeg.Player(
-          'ws://localhost/solar-lab/camera-lpz',
+          'wss://eubbc-digital.upb.edu/solar-lab/camera-lpz',
           {
             canvas: streamRef.current,
             audio: false,
