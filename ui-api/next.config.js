@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
 	output: 'standalone',
-	basePath: '',
+	basePath: '/solar-lab',
 	assetPrefix: '/solar-lab',
 };
