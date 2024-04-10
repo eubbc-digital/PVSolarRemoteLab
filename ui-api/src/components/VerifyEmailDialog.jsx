@@ -37,7 +37,7 @@ export default function VerifyEmailDialog({ open, handleClose }) {
 			if (answer.user.isVerified) {
 				handleClose();
 			} else {
-				toast.error('Not Verified yet, go to your Email');
+				toast.info('Not Verified yet, go to your Email');
 			}
 		}
 	};

@@ -147,7 +147,7 @@ export default function SignInDialog({ open, handleClose, onClickSignup }) {
 							<Typography variant='buttons4'>Sign In</Typography>
 						</LoadingButton>
 					</Grid>
-					<Divider
+					{/*<<Divider
 						sx={{
 							'&::before, &::after': {
 								borderColor: 'blacky.main',
@@ -166,7 +166,7 @@ export default function SignInDialog({ open, handleClose, onClickSignup }) {
 						>
 							<GoogleButton></GoogleButton>
 						</Grid>
-					</Grid>
+					</Grid>*/}
 					<Grid container spacing={1} justifyContent='center'>
 						<Grid item mt={{ xxs: 1, xs: 1, sm: 1 }}>
 							<Typography variant='header3'>Don't have an account? </Typography>

@@ -346,32 +346,32 @@ export default function DepartamentExperiment({
 
 	const sendMqttMessage = async (action) => {
 		var department = name;
-		if (action == 'START' && radiation < 150) {
+		/*if (action == 'START' && radiation < 150) {
 			activities.loading = false;
 			setExperimentLoading(false);
 			toast.info(
 				'You can only perform Efficiency Experiments when radiation is greater than 150'
 			);
+		} else {*/
+		if (syncPanels && action != 'START') {
+			department = 'ALL';
 		} else {
-			if (syncPanels && action != 'START') {
-				department = 'ALL';
-			} else {
-				selectedAngle = departmentSelectedAngle;
-			}
-			const message = {
-				action: action,
-				angle: selectedAngle,
-				department: department,
-			};
-			const response = await fetch(`/solar-lab/api/mqtt/send`, {
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				method: 'POST',
-				body: JSON.stringify(message),
-			});
-			const data = await response.json();
+			selectedAngle = departmentSelectedAngle;
 		}
+		const message = {
+			action: action,
+			angle: selectedAngle,
+			department: department,
+		};
+		const response = await fetch(`/solar-lab/api/mqtt/send`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+			body: JSON.stringify(message),
+		});
+		const data = await response.json();
+		//}
 	};
 
 	const waitingExperiment = () => {
