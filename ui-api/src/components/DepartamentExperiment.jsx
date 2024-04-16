@@ -165,8 +165,10 @@ export default function DepartamentExperiment({
     if (env) {
       clearFields();
       const socket = io(
-        'wss://eubbc-digital.upb.edu/solar-lab/data-stream'
+        'wss://eubbc-digital.upb.edu',
+        {path : '/solar-lab/data-stream'}
       );
+
       socket.on('esp32', (...msg) => {
         dataHandler(msg);
       });
