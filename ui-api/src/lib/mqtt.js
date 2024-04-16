@@ -6,7 +6,7 @@ import socket from './socket';
 
 const connectMqtt = () => {
 	const client = mqtt.connect(
-		`mqtt://${process.env.NEXT_PUBLIC_SERVICES_HOST}:${process.env.MQTT_PORT}`,
+		`mqtt://research.upb.edu:61883`,
 		{
 			clientId: 'SolarLab',
 		}
