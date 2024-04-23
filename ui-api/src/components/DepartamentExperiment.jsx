@@ -300,7 +300,6 @@ export default function DepartamentExperiment({
     } catch (e) { }
   };
 
-<<<<<<< HEAD
   const updateCityData = (name) => {
     let data = (prevState) => ({
       ...prevState,
@@ -346,47 +345,16 @@ export default function DepartamentExperiment({
       setSCZData(data);
     }
   };
-=======
-	const sendMqttMessage = async (action) => {
-		var department = name;
-		/*if (action == 'START' && radiation < 150) {
-			activities.loading = false;
-			setExperimentLoading(false);
-			toast.info(
-				'You can only perform Efficiency Experiments when radiation is greater than 150'
-			);
-		} else {*/
-		if (syncPanels && action != 'START') {
-			department = 'ALL';
-		} else {
-			selectedAngle = departmentSelectedAngle;
-		}
-		const message = {
-			action: action,
-			angle: selectedAngle,
-			department: department,
-		};
-		const response = await fetch(`/solar-lab/api/mqtt/send`, {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			method: 'POST',
-			body: JSON.stringify(message),
-		});
-		const data = await response.json();
-		//}
-	};
->>>>>>> 61832ec8a842bf8256bffc9a63058e982409d9ea
 
   const sendMqttMessage = async (action) => {
     var department = name;
-    /*if (action == 'START' && radiation < 200) {
+    if (action == 'START' && radiation < 200) {
       activities.loading = false;
       setExperimentLoading(false);
       toast.info(
         'You can only perform Efficiency Experiments when radiation is greater than 200'
       );
-    } else {*/
+    } else {
     if (syncPanels && action != 'START') {
       department = 'ALL';
     } else {
@@ -405,7 +373,7 @@ export default function DepartamentExperiment({
       body: JSON.stringify(message),
     });
     const data = await response.json();
-    //}
+    }
   };
 
   const waitingExperiment = () => {
