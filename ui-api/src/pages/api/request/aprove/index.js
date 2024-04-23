@@ -15,18 +15,7 @@ export default async function handler(req, res) {
 					},
 				},
 			});
-			const course = await db.Course.findFirst({
-				where: {
-					id: req.body.courseId,
-				},
-			});
 
-			await sendEmail(
-				joinCourse.userEmail,
-				'APPROVE',
-				course.name,
-				joinCourse.userEmail
-			);
 			const deletedRequest = await db.Request.delete({
 				where: {
 					id: req.body.id,
