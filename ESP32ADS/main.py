@@ -1,4 +1,3 @@
-
 i2c = SoftI2C(scl=Pin(22), sda=Pin(21), freq=800000)
 adc = ads1x15.ADS1115(i2c, addr, gain)
 
@@ -10,27 +9,31 @@ def sub_cb(topic, msg):
     except Exception:
         pass
     else:
-        action = received_msg['action']
-        print(action)
-        if topic == topic_sub and action == 'START':
-            time.sleep(0.5)
-            relayDischarge.value(1)
-            time.sleep(1.5)
-            relayDischarge.value(0)
-            time.sleep(0.5)
-            relayPanelPositive.value(1)
-            relayGND.value(1)
-            time.sleep(0.5)
-            relayCharge.value(1)
-            getExperimentData()
-            print("Sent")
-            relayCharge.value(0)
-            relayPanelPositive.value(0)
-            relayGND.value(0)
-            relayDischarge.value(1)
-            time.sleep(3)
-            relayDischarge.value(0)
-            print("Test Finished")
+        try:
+            action = received_msg['action']
+            print(action)
+            if topic == topic_sub and action == 'START':
+                time.sleep(0.5)
+                relayDischarge.value(1)
+                time.sleep(1.5)
+                relayDischarge.value(0)
+                time.sleep(0.5)
+                relayPanelPositive.value(1)
+                relayGND.value(1)
+                time.sleep(0.5)
+                relayCharge.value(1)
+                getExperimentData()
+                print("Sent")
+                relayCharge.value(0)
+                relayPanelPositive.value(0)
+                relayGND.value(0)
+                relayDischarge.value(1)
+                time.sleep(3)
+                relayDischarge.value(0)
+                print("Test Finished")
+        except Exception as e:
+            print(e)
+            restart_and_reconnect()
 
 
 def sendData(efficiencyTest):
@@ -125,6 +128,6 @@ while True:
         client.check_msg()
         time.sleep(0.8)
 
-    except Exception as e:
+    except OSError as e:
         print(e)
         restart_and_reconnect()

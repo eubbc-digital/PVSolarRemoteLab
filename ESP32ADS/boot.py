@@ -46,10 +46,6 @@ topic_pub = b'solarlab/server'
 # City
 city = "Santa Cruz"
 
-# Wifi
-# ssid = 'FLIA-GAMBOA-BALDI'
-# password = 'Andres14219'
-
 ssid = 'UPB'
 password = ''
 

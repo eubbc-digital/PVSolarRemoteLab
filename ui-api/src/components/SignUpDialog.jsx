@@ -403,7 +403,7 @@ export default function SignUpDialog({ open, handleClose, onClickSignIn }) {
 								>
 									<GoogleButton></GoogleButton>
 								</Grid>
-							</Grid>{' '}
+							</Grid>
 						</Box>
 					) : (
 						<Grid
