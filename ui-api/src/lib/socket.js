@@ -7,6 +7,7 @@ const connectSocket = () => {
 		cors: {
 			origin: '*',
 		},
+    path: '/solar-lab/data-stream'
 	});
 	io.listen(process.env.NEXT_PUBLIC_WS_SERVER_PORT);
 

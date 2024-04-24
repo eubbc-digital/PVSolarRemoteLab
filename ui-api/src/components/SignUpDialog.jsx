@@ -384,7 +384,7 @@ export default function SignUpDialog({ open, handleClose, onClickSignIn }) {
 									</Link>
 								</Grid>
 							</Grid>
-							{/*<Divider
+							<Divider
 								sx={{
 									'&::before, &::after': {
 										borderColor: 'blacky.main',
@@ -403,7 +403,7 @@ export default function SignUpDialog({ open, handleClose, onClickSignIn }) {
 								>
 									<GoogleButton></GoogleButton>
 								</Grid>
-							</Grid>{' '}*/}
+							</Grid>
 						</Box>
 					) : (
 						<Grid
