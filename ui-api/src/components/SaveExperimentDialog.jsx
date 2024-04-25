@@ -147,7 +147,7 @@ export default function SaveExperimentDialog({
 						setLoading(false);
 					}
 				} else {
-					toast.error('Each selected City should have Completed Activity 1');
+					toast.info('Your experiment is empty');
 				}
 			} else {
 				toast.error('Please Review Name and Course');
@@ -164,7 +164,7 @@ export default function SaveExperimentDialog({
 		if (departmentsToSave.length == 0) {
 			return false;
 		}
-		let everyActivity1HasData = departmentsToSave.every(function (activities) {
+		let everyActivity1HasData = departmentsToSave.some(function (activities) {
 			return (
 				activities.activities[0].temperature ||
 				activities.activities[0].radiation

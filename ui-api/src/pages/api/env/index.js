@@ -5,6 +5,7 @@ export default async function handler(req, res) {
 		try {
 			const env = {
 				NEXT_PUBLIC_SERVICES_HOST: process.env.NEXT_PUBLIC_SERVICES_HOST,
+				NEXT_PUBLIC_HOST: process.env.NEXT_PUBLIC_HOST,
 				NEXT_PUBLIC_WS_SERVER_PORT: process.env.NEXT_PUBLIC_WS_SERVER_PORT,
 				NEXT_PUBLIC_LINKCAMERACBBA: process.env.NEXT_PUBLIC_LINKCAMERACBBA,
 				NEXT_PUBLIC_LINKCAMERALPZ: process.env.NEXT_PUBLIC_LINKCAMERALPZ,
