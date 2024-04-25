@@ -76,6 +76,7 @@ export default function DepartamentExperiment({
 	selectedAngle,
 	setSelectedAngle,
 	setNotSaved,
+	notSaved,
 }) {
 	let previousRadiation;
 	let previousUvaRadiation;
@@ -152,6 +153,12 @@ export default function DepartamentExperiment({
 	}, []);
 
 	useEffect(() => {
+		if (!notSaved) {
+			clearFields();
+		}
+	}, [notSaved]);
+
+	useEffect(() => {
 		const timerData = setTimeout(() => {
 			if (dataLoading) {
 				toast.warn(`Can't connect with ${name}, Trying to reconnect...`);
@@ -163,7 +170,6 @@ export default function DepartamentExperiment({
 
 	useEffect(() => {
 		if (env) {
-			clearFields();
 			const socket = io(`wss://${env.NEXT_PUBLIC_HOST}`, {
 				path: '/solar-lab/data-stream',
 			});

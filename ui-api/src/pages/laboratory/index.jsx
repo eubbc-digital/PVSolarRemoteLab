@@ -336,6 +336,7 @@ export default function Laboratory() {
 							selectedAngle={selectedAngle}
 							setSelectedAngle={setSelectedAngle}
 							setNotSaved={setNotSaved}
+							notSaved={notSaved}
 						></DepartamentExperiment>
 					))}
 					<Box>
