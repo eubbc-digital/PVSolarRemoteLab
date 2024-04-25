@@ -242,7 +242,9 @@ export default function Courses() {
 			headerName: 'Experiments',
 			width: 130,
 			valueGetter: (params) => {
-				return params.row.experiments.length;
+				return params.row.experiments.filter(
+					(experiment) => experiment.courseId == selectedCourse.id
+				).length;
 			},
 		},
 	];
