@@ -164,13 +164,7 @@ export default function SaveExperimentDialog({
 		if (departmentsToSave.length == 0) {
 			return false;
 		}
-		let everyActivity1HasData = departmentsToSave.some(function (activities) {
-			return (
-				activities.activities[0].temperature ||
-				activities.activities[0].radiation
-			);
-		});
-		return everyActivity1HasData;
+		return true;
 	};
 
 	const handleChange = (event) => {
