@@ -458,6 +458,9 @@ export default function Laboratory() {
 									departmentData={[CBBAData, LPZData, SCZData]}
 									selectedCities={selectedCities}
 									setNotSaved={setNotSaved}
+									setSCZData={setSCZData}
+									setCBBAData={setCBBAData}
+									setLPZData={setLPZData}
 								/>
 							) : null}
 						</Stack>

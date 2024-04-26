@@ -286,7 +286,7 @@ export default function DepartamentExperiment({
 						);
 						activities.current[2].efficiency =
 							(activities.current[2].maxPower /
-								(previousRadiation * panelArea)) *
+								(previousRadiation * Math.cos(previousAngle) * panelArea)) *
 							100;
 					}
 					updateCityData(name);

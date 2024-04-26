@@ -29,6 +29,9 @@ export default function SaveExperimentDialog({
 	departmentData,
 	selectedCities,
 	setNotSaved,
+	setSCZData,
+	setCBBAData,
+	setLPZData,
 }) {
 	const { data: session, status } = useSession();
 	const [experimentName, setExperimentName] = useState('');
@@ -138,6 +141,9 @@ export default function SaveExperimentDialog({
 					if (answer.status) {
 						setExperimentName('');
 						setSelectedCourse('');
+						setCBBAData({});
+						setLPZData({});
+						setSCZData({});
 						setLoading(false);
 						handleClose();
 						setNotSaved(false);
