@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import { Grid, Typography, Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import 'react-circular-progressbar/dist/styles.css';

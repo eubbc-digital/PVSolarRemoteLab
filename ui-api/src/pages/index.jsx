@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import Head from 'next/head';
 import styles from '@/styles/Home.module.scss';
 import React, { useEffect, useState } from 'react';
@@ -46,7 +50,7 @@ export default function Home() {
 		const accessKey = urlParams.get('access_key');
 		if (accessKey != null) {
 			setLoading(true);
-			if (accessKey == 'admin' || accessKey == 'golc2024') {
+			if (accessKey == 'admin') {
 				window.localStorage.setItem(
 					'SESSION_DATA',
 					JSON.stringify({

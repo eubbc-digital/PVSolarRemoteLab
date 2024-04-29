@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import { Box, Button, Dialog, Grid, Typography, Stack } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useState, useEffect } from 'react';

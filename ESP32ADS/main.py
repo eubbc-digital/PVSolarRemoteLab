@@ -1,3 +1,8 @@
+
+# Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+# MIT License - See LICENSE file in the root directory
+# Andres Gamboa, Alex Villazon
+
 i2c = SoftI2C(scl=Pin(22), sda=Pin(21), freq=800000)
 adc = ads1x15.ADS1115(i2c, addr, gain)
 

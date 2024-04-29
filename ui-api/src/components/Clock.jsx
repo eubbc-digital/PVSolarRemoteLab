@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import 'react-toastify/dist/ReactToastify.css';

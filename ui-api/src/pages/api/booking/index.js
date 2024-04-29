@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 export default async function handler(req, res) {
 	if (req.method === 'POST') {
 		const access_key = req.body.access_key;

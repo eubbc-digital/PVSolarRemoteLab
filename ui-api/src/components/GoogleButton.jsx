@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import { SvgIcon, Typography, Button } from '@mui/material';
 import { signIn } from 'next-auth/react';
 import 'react-toastify/dist/ReactToastify.css';

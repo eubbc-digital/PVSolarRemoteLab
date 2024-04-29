@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';

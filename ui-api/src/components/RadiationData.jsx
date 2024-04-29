@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import React, { useEffect, useState } from 'react';
 import { Typography, Box, IconButton, Popover } from '@mui/material';
 import MoreTimeIcon from '@mui/icons-material/MoreTime';

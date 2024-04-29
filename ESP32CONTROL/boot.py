@@ -1,3 +1,8 @@
+
+# Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+# MIT License - See LICENSE file in the root directory
+# Andres Gamboa, Alex Villazon
+
 import gc
 import machine
 import network

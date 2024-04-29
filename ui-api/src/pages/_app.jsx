@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import '@/styles/globals.scss';
 import { SessionProvider } from 'next-auth/react';
 import theme from '../styles/theme';

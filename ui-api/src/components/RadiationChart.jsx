@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import { Line } from 'react-chartjs-2';
 import { Typography, Box, Grid, AppBar, Tabs, Tab } from '@mui/material';
 import { Chart as ChartJS } from 'chart.js/auto';

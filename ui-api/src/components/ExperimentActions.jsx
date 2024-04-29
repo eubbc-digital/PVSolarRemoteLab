@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import { Box, IconButton, Typography, Grid } from '@mui/material';
 import { Close, Launch } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react';
