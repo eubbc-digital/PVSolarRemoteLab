@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import CitiesTypography from '../../components/CitiesTypography';
 import DepartamentExperiment from '../../components/DepartamentExperiment';
 import {
@@ -336,6 +340,7 @@ export default function Laboratory() {
 							selectedAngle={selectedAngle}
 							setSelectedAngle={setSelectedAngle}
 							setNotSaved={setNotSaved}
+							notSaved={notSaved}
 						></DepartamentExperiment>
 					))}
 					<Box>
@@ -457,6 +462,9 @@ export default function Laboratory() {
 									departmentData={[CBBAData, LPZData, SCZData]}
 									selectedCities={selectedCities}
 									setNotSaved={setNotSaved}
+									setSCZData={setSCZData}
+									setCBBAData={setCBBAData}
+									setLPZData={setLPZData}
 								/>
 							) : null}
 						</Stack>

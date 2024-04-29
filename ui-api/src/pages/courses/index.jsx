@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import {
 	Box,
 	Grid,
@@ -242,7 +246,9 @@ export default function Courses() {
 			headerName: 'Experiments',
 			width: 130,
 			valueGetter: (params) => {
-				return params.row.experiments.length;
+				return params.row.experiments.filter(
+					(experiment) => experiment.courseId == selectedCourse.id
+				).length;
 			},
 		},
 	];

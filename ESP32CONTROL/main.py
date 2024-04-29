@@ -1,4 +1,8 @@
 
+# Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+# MIT License - See LICENSE file in the root directory
+# Andres Gamboa, Alex Villazon
+
 # States
 OFF = 0
 UP = 1
@@ -110,8 +114,6 @@ def waitData():
 
 
 def sub_cb(topic, msg):
-    if msg == b"RESET":
-        restart_and_reconnect()
     try:
         received_msg = json.loads(msg)
     except Exception:
@@ -149,7 +151,7 @@ def sub_cb(topic, msg):
                     print("Previous", str(previousAngle))
                     if (abs(currentAngle - previousAngle) < 0.3):
                         notMovingCount += 1
-                        if (notMovingCount > 60):
+                        if (notMovingCount > 100):
                             print("Error Moving Panel")
                             break
                     else:
@@ -161,7 +163,8 @@ def sub_cb(topic, msg):
                             currentAngle = waitData()[2]
                 turnOff()
                 print("Moved To: ", str(currentAngle))
-        except Exception:
+        except Exception as e:
+            print(e)
             restart_and_reconnect()
 
 

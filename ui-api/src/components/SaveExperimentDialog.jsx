@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import {
 	Box,
 	Button,
@@ -29,6 +33,9 @@ export default function SaveExperimentDialog({
 	departmentData,
 	selectedCities,
 	setNotSaved,
+	setSCZData,
+	setCBBAData,
+	setLPZData,
 }) {
 	const { data: session, status } = useSession();
 	const [experimentName, setExperimentName] = useState('');
@@ -138,6 +145,9 @@ export default function SaveExperimentDialog({
 					if (answer.status) {
 						setExperimentName('');
 						setSelectedCourse('');
+						setCBBAData({});
+						setLPZData({});
+						setSCZData({});
 						setLoading(false);
 						handleClose();
 						setNotSaved(false);
@@ -147,7 +157,7 @@ export default function SaveExperimentDialog({
 						setLoading(false);
 					}
 				} else {
-					toast.error('Each selected City should have Completed Activity 1');
+					toast.info('Your experiment is empty');
 				}
 			} else {
 				toast.error('Please Review Name and Course');
@@ -164,13 +174,7 @@ export default function SaveExperimentDialog({
 		if (departmentsToSave.length == 0) {
 			return false;
 		}
-		let everyActivity1HasData = departmentsToSave.every(function (activities) {
-			return (
-				activities.activities[0].temperature ||
-				activities.activities[0].radiation
-			);
-		});
-		return everyActivity1HasData;
+		return true;
 	};
 
 	const handleChange = (event) => {

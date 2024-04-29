@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import * as mqtt from 'mqtt';
 
 const globalForMqtt = global;
@@ -5,12 +9,9 @@ const globalForMqtt = global;
 import socket from './socket';
 
 const connectMqtt = () => {
-	const client = mqtt.connect(
-		`mqtt://${process.env.NEXT_PUBLIC_SERVICES_HOST}:${process.env.MQTT_PORT}`,
-		{
-			clientId: 'SolarLab',
-		}
-	);
+	const client = mqtt.connect(process.env.MQTT_BROKER_HOST, {
+		clientId: 'SolarLab',
+	});
 	client.on('connect', function () {
 		mqttClient.subscribe('solarlab/server');
 	});

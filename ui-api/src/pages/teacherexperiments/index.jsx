@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import {
 	Box,
 	Grid,
@@ -129,11 +133,16 @@ export default function Teacherexperiments() {
 			setTeacherCourses(answer.courses);
 			if (answer.courses.length > 0) {
 				setSelectedCourse(answer.courses[0].id);
+				var courseId = answer.courses[0].id;
 				setCourseStudents(answer.courses[0].students);
 				if (answer.courses[0].students.length > 0) {
 					setSelectedStudentName(answer.courses[0].students[0].user.name);
 					setSelectedStudentEmail(answer.courses[0].students[0].user.email);
-					setExperiment(answer.courses[0].students[0].experiments[0]);
+					setExperiment(
+						answer.courses[0].students[0].experiments.filter(
+							(experiment) => experiment.courseId == courseId
+						)[0]
+					);
 				}
 			}
 		}
@@ -161,7 +170,11 @@ export default function Teacherexperiments() {
 						(experiment) => experiment.courseId == selectedCourse
 					)
 				) {
-					setExperiment(student.experiments[0]);
+					setExperiment(
+						student.experiments.filter(
+							(experiment) => experiment.courseId == selectedCourse
+						)[0]
+					);
 				} else {
 					setExperiment(undefined);
 				}
@@ -282,9 +295,11 @@ export default function Teacherexperiments() {
 	}, [status]);
 
 	useEffect(() => {
-		if (experiment.cityLabs) {
-			filterActivities(1);
-			setSelectedActivity(1);
+		if (experiment) {
+			if (selectedStudentEmail != '') {
+				filterActivities(1);
+				setSelectedActivity(1);
+			}
 		}
 	}, [experiment]);
 

@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import { Server } from 'socket.io';
 
 const globalForSocket = global;
@@ -7,6 +11,7 @@ const connectSocket = () => {
 		cors: {
 			origin: '*',
 		},
+		path: '/solar-lab/data-stream',
 	});
 	io.listen(process.env.NEXT_PUBLIC_WS_SERVER_PORT);
 

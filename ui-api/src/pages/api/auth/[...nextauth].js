@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import NextAuth from 'next-auth';
 
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -12,16 +16,13 @@ export const authOptions = {
 					email: credentials.email,
 					password: credentials.password,
 				};
-				const response = await fetch(
-					`http://${process.env.NEXT_PUBLIC_HOST}:${process.env.REACT_APP_PORT}/solar-lab/api/login`,
-					{
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						method: 'POST',
-						body: JSON.stringify(user),
-					}
-				);
+				const response = await fetch(`${process.env.DOMAIN}/api/login`, {
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					method: 'POST',
+					body: JSON.stringify(user),
+				});
 				const session = await response.json();
 				if (session) {
 					return session;
@@ -39,23 +40,20 @@ export const authOptions = {
 	callbacks: {
 		async signIn({ account, profile }) {
 			if (account.provider == 'google') {
-				const response = await fetch(
-					`http://${process.env.NEXT_PUBLIC_HOST}:${process.env.REACT_APP_PORT}/solar-lab/api/users/exists`,
-					{
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						method: 'POST',
-						body: JSON.stringify({ email: profile.email }),
-					}
-				);
+				const response = await fetch(`${process.env.DOMAIN}/api/users/exists`, {
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					method: 'POST',
+					body: JSON.stringify({ email: profile.email }),
+				});
 				const answer = await response.json();
 				if (answer.status) {
 					if (answer.exists) {
 						return true;
 					} else {
 						const response = await fetch(
-							`http://${process.env.NEXT_PUBLIC_HOST}:${process.env.REACT_APP_PORT}/solar-lab/api/google/create`,
+							`${process.env.DOMAIN}/api/google/create`,
 							{
 								headers: {
 									'Content-Type': 'application/json',

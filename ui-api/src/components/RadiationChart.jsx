@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import { Line } from 'react-chartjs-2';
 import { Typography, Box, Grid, AppBar, Tabs, Tab } from '@mui/material';
 import { Chart as ChartJS } from 'chart.js/auto';
@@ -39,14 +43,24 @@ export default function RadiationChart({ title, city, type }) {
 	const [grafanaLink, setGrafanaLink] = useState([]);
 
 	useEffect(() => {
-		//envvariable
-		setGrafanaLink(
-			'http://research.upb.edu:8000/d/BFHsoFzIz/upb-remote-solar-lab?orgId=1&from=now-2d&to=now'
-		);
-
+		getEnvVariables();
 		loadTodayData();
 		loadSeasonalData();
 	}, []);
+
+	const getEnvVariables = async () => {
+		const request = await fetch(`/solar-lab/api/env`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'GET',
+		});
+
+		const response = await request.json();
+		if (response.status) {
+			setGrafanaLink(response.variables.NEXT_PUBLIC_GRAFANA_LINK);
+		}
+	};
 
 	const loadTodayData = async () => {
 		let data = [];
@@ -103,11 +117,11 @@ export default function RadiationChart({ title, city, type }) {
 			},
 			{
 				name: 'Summer',
-				date: new Date('02/28/2023').toISOString().split('T')[0],
+				date: new Date('01/09/2024').toISOString().split('T')[0],
 			},
 			{
 				name: 'Autumn',
-				date: new Date('05/21/2023').toISOString().split('T')[0],
+				date: new Date('03/29/2024').toISOString().split('T')[0],
 			},
 			{
 				name: 'Winter',
@@ -141,7 +155,7 @@ export default function RadiationChart({ title, city, type }) {
 			dayjs(todayDate).isAfter('3/20/2023') &&
 			dayjs(todayDate).isBefore('6/21/2023')
 		) {
-			return new Date('5/21/2023').toISOString().split('T')[0];
+			return new Date('03/29/2024').toISOString().split('T')[0];
 		} else if (
 			dayjs(todayDate).isAfter('6/20/2023') &&
 			dayjs(todayDate).isBefore('9/21/2023')
@@ -153,7 +167,7 @@ export default function RadiationChart({ title, city, type }) {
 		) {
 			return new Date('11/30/2022').toISOString().split('T')[0];
 		} else {
-			return new Date('2/28/2023').toISOString().split('T')[0];
+			return new Date('01/09/2024').toISOString().split('T')[0];
 		}
 	};
 

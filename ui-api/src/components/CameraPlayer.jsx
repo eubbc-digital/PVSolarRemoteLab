@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import React, { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import { Box } from '@mui/material';
@@ -6,37 +10,68 @@ import { toast } from 'react-toastify';
 
 export default function StreamPlayer({ name }) {
 	let player;
+	const [env, setEnv] = useState(null);
 
 	const handlerPlayer = () => {
-		if (name === 'Cochabamba') {
-			//envvariable
-			const { JSMpeg } = require('../scripts/jsmpeg.min.js');
-			player = new JSMpeg.Player(`ws://research.upb.edu:8888`, {
-				canvas: streamRef.current,
-				audio: false,
-			});
-		} else if (name === 'Santa Cruz') {
-			const { JSMpeg } = require('../scripts/jsmpeg.min.js');
-			player = new JSMpeg.Player(`ws://research.upb.edu:9999`, {
-				canvas: streamRef.current,
-				audio: false,
-			});
-		} else {
-			const { JSMpeg } = require('../scripts/jsmpeg.min.js');
-			player = new JSMpeg.Player(`ws://research.upb.edu:7777`, {
-				canvas: streamRef.current,
-				audio: false,
-			});
+		if (env) {
+			if (name === 'Cochabamba') {
+				const { JSMpeg } = require('../scripts/jsmpeg.min.js');
+				player = new JSMpeg.Player(
+					'wss://eubbc-digital.upb.edu/solar-lab/camera-cbba',
+					{
+						canvas: streamRef.current,
+						audio: false,
+					}
+				);
+			} else if (name === 'Santa Cruz') {
+				const { JSMpeg } = require('../scripts/jsmpeg.min.js');
+				player = new JSMpeg.Player(
+					'wss://eubbc-digital.upb.edu/solar-lab/camera-scz',
+					{
+						canvas: streamRef.current,
+						audio: false,
+					}
+				);
+			} else {
+				const { JSMpeg } = require('../scripts/jsmpeg.min.js');
+				player = new JSMpeg.Player(
+					'wss://eubbc-digital.upb.edu/solar-lab/camera-lpz',
+					{
+						canvas: streamRef.current,
+						audio: false,
+					}
+				);
+			}
+		}
+	};
+
+	const getEnvVariables = async () => {
+		const request = await fetch(`/solar-lab/api/env`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'GET',
+		});
+
+		const response = await request.json();
+		if (response.status) {
+			setEnv(response.variables);
 		}
 	};
 
 	const streamRef = useRef(null);
 
 	useEffect(() => {
-		handlerPlayer();
-		return () => {
-			player.destroy();
-		};
+		if (env) {
+			handlerPlayer();
+			return () => {
+				player.destroy();
+			};
+		}
+	}, [env]);
+
+	useEffect(() => {
+		getEnvVariables();
 	}, []);
 
 	return (

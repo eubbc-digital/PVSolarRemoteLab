@@ -1,3 +1,8 @@
+
+# Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+# MIT License - See LICENSE file in the root directory
+# Andres Gamboa, Alex Villazon
+
 import gc
 import machine
 import network
@@ -36,15 +41,11 @@ relayNegativeA.value(0)
 relayPositiveB.value(0)
 
 # Topics
-topic_sub = b'solarlab/esp32/cbba'
+topic_sub = b'solarlab/esp32/scz'
 topic_pub = b'solarlab/server'
 # City
-city = "Cochabamba"
-dataloggerIP = '10.1.1.53'
-
-# Wifi
-# ssid = 'GAMBOA BALDI'
-# password = 'Andres14213009'
+city = "Santa Cruz"
+dataloggerIP = '10.1.3.29'
 
 ssid = 'UPB'
 password = ''

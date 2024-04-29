@@ -1,3 +1,8 @@
+
+# Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+# MIT License - See LICENSE file in the root directory
+# Andres Gamboa, Alex Villazon
+
 import gc
 from machine import SoftI2C, Pin, Timer
 import machine
@@ -45,10 +50,6 @@ topic_sub = b'solarlab/esp32/scz'
 topic_pub = b'solarlab/server'
 # City
 city = "Santa Cruz"
-
-# Wifi
-# ssid = 'FLIA-GAMBOA-BALDI'
-# password = 'Andres14219'
 
 ssid = 'UPB'
 password = ''

@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import {
 	Typography,
 	Box,
@@ -76,6 +80,7 @@ export default function DepartamentExperiment({
 	selectedAngle,
 	setSelectedAngle,
 	setNotSaved,
+	notSaved,
 }) {
 	let previousRadiation;
 	let previousUvaRadiation;
@@ -115,13 +120,28 @@ export default function DepartamentExperiment({
 
 	const [experimentLoading, setExperimentLoading] = React.useState(false);
 	const [dataLoading, setDataLoading] = React.useState(true);
+	const [env, setEnv] = useState(null);
 
 	const handleChangeTabs = (event, newValue) => {
 		setValue(newValue);
 		activities.tabIndex = newValue;
 	};
+	const getEnvVariables = async () => {
+		const request = await fetch(`/solar-lab/api/env`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'GET',
+		});
+
+		const response = await request.json();
+		if (response.status) {
+			setEnv(response.variables);
+		}
+	};
 
 	useEffect(() => {
+		getEnvVariables();
 		if (name == 'Cochabamba') {
 			setTypeRadiation('solarRadiationCMPAvg');
 			setTypeUVAradiation('uvaRadiationLPAvg');
@@ -137,6 +157,12 @@ export default function DepartamentExperiment({
 	}, []);
 
 	useEffect(() => {
+		if (!notSaved) {
+			clearFields();
+		}
+	}, [notSaved]);
+
+	useEffect(() => {
 		const timerData = setTimeout(() => {
 			if (dataLoading) {
 				toast.warn(`Can't connect with ${name}, Trying to reconnect...`);
@@ -147,17 +173,20 @@ export default function DepartamentExperiment({
 	}, [dataLoading]);
 
 	useEffect(() => {
-		clearFields();
-		//envvariable
-		const socket = io(`ws://research.upb.edu:4000`);
-		socket.on('esp32', (...msg) => {
-			dataHandler(msg);
-		});
-		return () => {
-			socket.disconnect();
-			updateCityData(name, 0, 0, 0, 0, 0, []);
-		};
-	}, []);
+		if (env) {
+			const socket = io(`wss://${env.NEXT_PUBLIC_HOST}`, {
+				path: '/solar-lab/data-stream',
+			});
+
+			socket.on('esp32', (...msg) => {
+				dataHandler(msg);
+			});
+			return () => {
+				socket.disconnect();
+				updateCityData(name, 0, 0, 0, 0, 0, []);
+			};
+		}
+	}, [env]);
 
 	const clearFields = () => {
 		clearActivity1();
@@ -261,7 +290,7 @@ export default function DepartamentExperiment({
 						);
 						activities.current[2].efficiency =
 							(activities.current[2].maxPower /
-								(previousRadiation * panelArea)) *
+								(previousRadiation * Math.cos(previousAngle) * panelArea)) *
 							100;
 					}
 					updateCityData(name);
@@ -328,32 +357,32 @@ export default function DepartamentExperiment({
 
 	const sendMqttMessage = async (action) => {
 		var department = name;
-		/*if (action == 'START' && radiation < 200) {
+		if (action == 'START' && radiation < 150) {
 			activities.loading = false;
 			setExperimentLoading(false);
 			toast.info(
-				'You can only perform Efficiency Experiments when radiation is greater than 200'
+				'You can only perform Efficiency Experiments when radiation is greater than 150'
 			);
-		} else {*/
-		if (syncPanels && action != 'START') {
-			department = 'ALL';
 		} else {
-			selectedAngle = departmentSelectedAngle;
+			if (syncPanels && action != 'START') {
+				department = 'ALL';
+			} else {
+				selectedAngle = departmentSelectedAngle;
+			}
+			const message = {
+				action: action,
+				angle: selectedAngle,
+				department: department,
+			};
+			const response = await fetch(`/solar-lab/api/mqtt/send`, {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				method: 'POST',
+				body: JSON.stringify(message),
+			});
+			const data = await response.json();
 		}
-		const message = {
-			action: action,
-			angle: selectedAngle,
-			department: department,
-		};
-		const response = await fetch(`/solar-lab/api/mqtt/send`, {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			method: 'POST',
-			body: JSON.stringify(message),
-		});
-		const data = await response.json();
-		//}
 	};
 
 	const waitingExperiment = () => {
@@ -382,23 +411,20 @@ export default function DepartamentExperiment({
 
 	const handleOpenCamera = () => {
 		if (name == 'Cochabamba') {
-			//envvariable
 			window.open(
-				'http://admin:Pass1234@research.upb.edu:60080/cgi-bin/mjpg/video.cgi?channel=1&subtype=1',
+				env.NEXT_PUBLIC_LINKCAMERACBBA,
 				'newwindow',
 				'width=500, height=600, top=100'
 			);
 		} else if (name == 'La Paz') {
-			//envvariable
 			window.open(
-				'http://admin:admin@research.upb.edu:60083/cgi-bin/mjpg/video.cgi?channel=1&subtype=1',
+				env.NEXT_PUBLIC_LINKCAMERALPZ,
 				'newwindow',
 				'width=500, height=600, top=100'
 			);
 		} else {
-			//envvariable
 			window.open(
-				'http://admin:Pass1234@research.upb.edu:60081/cgi-bin/mjpg/video.cgi?channel=1&subtype=1',
+				env.NEXT_PUBLIC_LINKCAMERASCZ,
 				'newwindow',
 				'width=500, height=600, top=100'
 			);

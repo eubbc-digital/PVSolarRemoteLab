@@ -1,3 +1,7 @@
+/*Copyright (c) Universidad Privada Boliviana (UPB) - EUBBC-Digital
+MIT License - See LICENSE file in the root directory
+Andres Gamboa, Alex Villazon*/
+
 import { Box, Dialog, Grid, Typography, Button } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,7 +41,7 @@ export default function VerifyEmailDialog({ open, handleClose }) {
 			if (answer.user.isVerified) {
 				handleClose();
 			} else {
-				toast.error('Not Verified yet, go to your Email');
+				toast.info('Not Verified yet, go to your Email');
 			}
 		}
 	};
