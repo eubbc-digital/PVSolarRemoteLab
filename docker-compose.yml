@@ -19,10 +19,8 @@ services:
       - 3307:3306
     restart: always
     command: --local-infile=ON
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: solar_lab_db
-      MYSQL_ROOT_HOST: '%'
+    env_file:
+      - variables.env
     volumes:
       - ./Database/data:/var/lib/mysql
     healthcheck:
