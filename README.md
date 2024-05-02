@@ -12,7 +12,7 @@ The installation of the PV Solar Remote Lab is simplified using Docker technolog
 
 ### Hardware Prerequisites
 
-![](assets/hardwarekit.png)
+![](Assets/hardwarekit.png)
 
 - You will need at least 1 entire Hardware Kit to run the laboratory.
   - A datalogger to retrieve the data of all the sensors
@@ -22,7 +22,7 @@ The installation of the PV Solar Remote Lab is simplified using Docker technolog
 
 ### Software Prerequisites
 
-![](assets/architecture.jpeg)
+![](Assets/architecture.jpeg)
 
 - You will need to have Docker and Docker Compose installed on the host that will run the bridge server. We recommend to use Linux (e.g. Ubuntu).
   - Here is a tutorial to [install Docker in Ubuntu](https://docs.docker.com/engine/install/ubuntu)
@@ -30,21 +30,25 @@ The installation of the PV Solar Remote Lab is simplified using Docker technolog
 
 ### Configuration of the PV Solar Remote Lab
 
-You need to edit the `variables.env` file to set the following parameters:
+Here we have two options, if you are using Nginx you should edit the file `variables.env`, if you are not using Nginx you need to edit the `variables.nonginx.env`. In both cases you should modify ONLY the following parameters:
 
 - `NEXT_PUBLIC_SERVICES_HOST`: The IP address of the Host where your docker services is deployed.
-- `MQTT_BROKER_HOST`: If you have a separated MQTT broker, you should enter the link here. (i.e mqtt://test.mosquitto.org.:1883)
-- `NEXT_PUBLIC_HOST`: The public hostname where the laboratory will be deployed. (i.e example.com)
+- `MQTT_BROKER_HOST`: Enter the link to your MQTT broker. (i.e mqtt://test.mosquitto.org.:1883).
+- `NEXT_PUBLIC_HOST`: The public hostname where the laboratory will be deployed. (i.e example.com). If you don't use Nginx, it should contain the port 3001. (i.e example.com:3001)
+- `MYSQL_ROOT_PASSWORD`: Enter your desired database user password.
 - `MYSQL_DATABASE`: Enter what you want your database to be called.
 - `DATABASE_USER`: Enter what you want your database user to be called.
-- `MYSQL_ROOT_PASSWORD`: Enter your desired database user password.
+- `NEXT_PUBLIC_WS_DATA_PATH`: If you don't use Nginx, leave this as empty (""). Otherwise, set the path linked to the port 4000 (by default `/solar-lab/data-stream`)
 - `NEXTAUTH_SECRET`: You must generate a Secret and paste it here. You can do it here: https://generate-secret.vercel.app/32
 - `HOST_BOOKING`: The Book4RLab URL for validation of sessions. By default it points to the centralized Booking System at https://eubbc-digital.upb.edu/booking/
-- `GOOGLE_CLIENT_ID`: To use the Google Sign In / Sign Up, you must generate a Google client ID. You can find a tutorial to do it here: https://shorturl.at/kuKU3
-- `GOOGLE_CLIENT_SECRET`: At the same time of generating a Google Client ID, you will generate a Google Client Secret, you should paste it here.
+- `GOOGLE_CLIENT_ID`: To use the Google Sign In / Sign Up, you must generate a Google client ID. You can find a tutorial to do it here: https://shorturl.at/kuKU3. If you don't need Google Sign In, this is not mandatory.
+- `GOOGLE_CLIENT_SECRET`: At the same time of generating a Google Client ID, you will generate a Google Client Secret, you should paste it here. If you don't need Google Sign In, this is not mandatory.
 - `HOST_CAMERACBBA`: Enter the hostname or IP address of the first camera, you should include the username and password. (i.e user:password@ipaddress)
 - `HOST_CAMERALPZ`: Enter the hostname or IP address of the second camera. (If only one, you can use the same as above)
 - `HOST_CAMERASCZ`: Enter the hostname or IP address of the second camera. (If only one, you can use the same as above)
+- `NEXT_PUBLIC_WS_CAMERA_CBBA`: This is the complete link to the first camera websocket. If you don't use Nginx, you don't need to change it. If you use it, you should modify the default path `/solar-lab/camera-cbba` to your redirected path of the port 8888
+- `NEXT_PUBLIC_WS_CAMERA_LPZ`: Same as above, but for the port 7777
+- `NEXT_PUBLIC_WS_CAMERA_SCZ`: Same as above, but for the port 9999
 - `USER_SMTP`: Enter the name with which you want your emails to arrive. (i.e solarlab@gmail.com)
 - `PWD_SMTP`: Enter your desired SMTP user password.
 
@@ -66,7 +70,13 @@ Next, run the rest of the services. Go bacj to the PVSolarRemoteLab directory an
 
 `cd ..`
 
-`docker-compose up -d --build`
+If you use Nginx, you should use the command:
+
+`docker-compose -f docker-compose.yml up -d --build`
+
+If you don't use, Nginx you should use the command:
+
+`docker-compose -f docker-compose-nonginx.yml up -d --build`
 
 Now, you have all the services of the PV Solar Remote Lab running.
 
@@ -74,9 +84,13 @@ The remote lab service works with a base-path (solar-lab), so you can enter to t
 
 ### Stopping the PV Solar Remote Lab Platform
 
-To stop the service, you can simply run the following command:
+If you use Nginx, you should use the command to stop the services:
 
-`docker-compose down`
+`docker-compose -f docker-compose.yml down`
+
+If you don't use, Nginx you should use the command to stop the services:
+
+`docker-compose -f docker-compose-nonginx.yml down`
 
 ## Authors
 
@@ -88,7 +102,7 @@ To stop the service, you can simply run the following command:
 This work was partially funded by the Erasmus+ Project “EUBBC-Digital” (No.
 618925-EPP-1-2020-1-BR-EPPKA2-CBHE-JP)
 
-![](assets/erasmus.jpeg)
+![](Assets/erasmus.jpeg)
 
 ## License
 

@@ -1,0 +1,95 @@
+version: "3.9"
+services:
+  broker:
+    image: eclipse-mosquitto
+    container_name: "SolarLab_Broker"
+    user: root
+    ports:
+      - 1883:1883
+    volumes:
+      - ./Broker/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+  database:
+    image: mysql
+    container_name: "SolarLab_Database"
+    user: root
+    ports:
+      - 3307:3306
+    restart: always
+    command: --local-infile=ON
+    env_file:
+      - variables-nonginx.env
+    volumes:
+      - ./Database/data:/var/lib/mysql
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 --password=$$MYSQL_ROOT_PASSWORD
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 50
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+  datawatcher:
+    container_name: "SolarLab_DataWatcher"
+    restart: always
+    user: root
+    build:
+      context: ./DataWatcher
+    volumes:
+      - ./FTP/Data:/node/Data
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - variables-nonginx.env
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+  server:
+    container_name: "SolarLab_Server"
+    build:
+      context: ./ui-api
+    restart: always
+    user: root
+    ports:
+      - 3001:3001
+      - 4000:4000
+      - 8888:8888
+      - 7777:7777
+      - 9999:9999
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - variables-nonginx.env
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+  grafana:
+    container_name: SolarLab_Grafana
+    build:
+      context: ./Grafana
+    restart: always
+    user: root
+    ports:
+      - 8002:8002
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_SERVER_HTTP_PORT=8002
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+      - ./Grafana/data:/var/lib/grafana
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
