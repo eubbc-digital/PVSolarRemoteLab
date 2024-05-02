@@ -19,6 +19,7 @@ services:
       FTP_USER_NAME: solarlab
       FTP_USER_PASS: solarlab123
       FTP_USER_HOME: /home/solarlab
+    user: root
 # also for ssl/tls:
 #      ADDED_FLAGS: "--tls=2"
     restart: always

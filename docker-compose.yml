@@ -3,6 +3,7 @@ services:
   broker:
     image: eclipse-mosquitto
     container_name: "SolarLab_Broker"
+    user: root
     ports:
       - 1883:1883
     volumes:
@@ -15,6 +16,7 @@ services:
   database:
     image: mysql
     container_name: "SolarLab_Database"
+    user: root
     ports:
       - 3307:3306
     restart: always
@@ -36,6 +38,7 @@ services:
   datawatcher:
     container_name: "SolarLab_DataWatcher"
     restart: always
+    user: root
     build:
       context: ./DataWatcher
     volumes:
@@ -54,6 +57,7 @@ services:
     build:
       context: ./ui-api
     restart: always
+    user: root
     ports:
       - 3001:3001
       - 4000:4000
@@ -74,6 +78,7 @@ services:
     build:
       context: ./Grafana
     restart: always
+    user: root
     ports:
       - 8002:8002
     environment:
