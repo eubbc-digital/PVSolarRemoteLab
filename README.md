@@ -30,10 +30,10 @@ The installation of the PV Solar Remote Lab is simplified using Docker technolog
 
 ### Configuration of the PV Solar Remote Lab
 
-Here we have two options, if you are using Nginx you should edit the file `variables.env`, if you are not using Nginx you need to edit the `variables.nonginx.env`. In both cases you should modify ONLY the following parameters:
+Here we have two options, if you are using Nginx you should edit the file `variables.env`, if you are not using Nginx you need to edit the `variables-nonginx.env`. In both cases you should modify ONLY the following parameters:
 
 - `NEXT_PUBLIC_SERVICES_HOST`: The IP address of the Host where your docker services is deployed.
-- `MQTT_BROKER_HOST`: Enter the link to your MQTT broker. (i.e mqtt://test.mosquitto.org.:1883).
+- `MQTT_BROKER_HOST`: Enter the link to your MQTT broker. (To test the Lab with our ESP32s, you can use the Broker mqtt://research.upb.edu:61883).
 - `NEXT_PUBLIC_HOST`: The public hostname where the laboratory will be deployed. (i.e example.com). If you don't use Nginx, it should contain the port 3001. (i.e example.com:3001)
 - `MYSQL_ROOT_PASSWORD`: Enter your desired database user password.
 - `MYSQL_DATABASE`: Enter what you want your database to be called.
@@ -52,6 +52,14 @@ Here we have two options, if you are using Nginx you should edit the file `varia
 - `USER_SMTP`: Enter the name with which you want your emails to arrive. (i.e solarlab@gmail.com)
 - `PWD_SMTP`: Enter your desired SMTP user password.
 
+### Routing Considerations
+
+To ensure the proper comunication between all the components, you should consider the following aspects:
+
+- Each ESP32 should communicate with its own Datalogger
+- Configure the ESP32s to point to the same MQTT Broker as specified before
+- Configure the datalogger(s) to point to the IP of the FTP server to send the historical data (if needed).
+
 ### Running the PV Solar Remote Lab
 
 Clone the repository and enter the PVSolarRemoteLab directory.
@@ -65,6 +73,10 @@ Next, if you need the FTP Server, enter to the FTP Directoty and build the separ
 `cd FTP`
 
 `docker-compose up -d --build`
+
+Then, If you are in Linux, add permissions to the FTP user to write in the directory
+
+`sudo chmod 757 -R FTP/Data`
 
 Next, run the rest of the services. Go bacj to the PVSolarRemoteLab directory and run the docker compose. This make take several minutes...
 
