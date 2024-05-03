@@ -174,8 +174,8 @@ export default function DepartamentExperiment({
 
 	useEffect(() => {
 		if (env) {
-			const socket = io(`wss://${env.NEXT_PUBLIC_HOST}`, {
-				path: '/solar-lab/data-stream',
+			const socket = io(env.NEXT_PUBLIC_WS_DATA, {
+				path: env.NEXT_PUBLIC_WS_DATA_PATH,
 			});
 
 			socket.on('esp32', (...msg) => {
