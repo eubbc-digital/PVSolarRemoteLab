@@ -10,8 +10,8 @@ var connection = mysql.createConnection({
   host: process.env.NEXT_PUBLIC_SERVICES_HOST,
   port: process.env.DATABASE_PORT,
   user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PWD,
-  database: "solar_lab_db",
+  password: process.env.MYSQL_ROOT_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
   flags: ["+LOCAL_FILES"],
 });
 const queryCbba =
