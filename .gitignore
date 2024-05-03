@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/nextjs,database,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=nextjs,database,react
 
+variables.env
+variables-nonginx.env
+
 ### Database ###
 *.accdb
 *.db

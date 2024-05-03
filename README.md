@@ -20,6 +20,8 @@ The installation of the PV Solar Remote Lab is simplified using Docker technolog
   - A Camera to transmit live video of the equipment
   - A PCB with two ESP32, an I-V curve trazer and another to control the motor
 
+If you only need to test the laboratory, you can avoid the hardware and use our MQTT broker (explained below).
+
 ### Software Prerequisites
 
 ![](Assets/architecture.jpeg)
@@ -30,7 +32,9 @@ The installation of the PV Solar Remote Lab is simplified using Docker technolog
 
 ### Configuration of the PV Solar Remote Lab
 
-Here we have two options, if you are using Nginx you should edit the file `variables.env`, if you are not using Nginx you need to edit the `variables-nonginx.env`. In both cases you should modify ONLY the following parameters:
+Here we have two options, if you are using Nginx you should edit the file `variables.env.sample`, if you are not using Nginx you need to edit the `variables-nonginx.env.sample`. In both cases, first you have to change the file name and delete the `.sample` of the end (The name should be `variables.env` or `variables-nonginx.env`).
+
+Then, you should modify ONLY the following parameters:
 
 - `NEXT_PUBLIC_SERVICES_HOST`: The IP address of the Host where your docker services is deployed.
 - `MQTT_BROKER_HOST`: Enter the link to your MQTT broker. (To test the Lab with our ESP32s, you can use the Broker mqtt://research.upb.edu:61883).
@@ -76,9 +80,9 @@ Next, if you need the FTP Server, enter to the FTP Directoty and build the separ
 
 Then, If you are in Linux, add permissions to the FTP user to write in the directory
 
-`sudo chmod 757 -R FTP/Data`
+`sudo chmod 777 -R FTP/Data`
 
-Next, run the rest of the services. Go bacj to the PVSolarRemoteLab directory and run the docker compose. This make take several minutes...
+Next, run the rest of the services. Go back to the PVSolarRemoteLab directory and run the docker compose. This make take several minutes...
 
 `cd ..`
 
