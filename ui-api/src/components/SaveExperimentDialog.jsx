@@ -46,11 +46,10 @@ export default function SaveExperimentDialog({
 	const [activitiesToShow, setActivitiesToShow] = useState([]);
 	const [studentCourses, setStudentCourses] = useState([]);
 	const [activities, setActivities] = useState([
-		{ id: 1, activity: 1, city: 'All' },
-		{ id: 2, activity: 2, city: 'Cochabamba' },
-		{ id: 3, activity: 2, city: 'La Paz' },
-		{ id: 4, activity: 2, city: 'Santa Cruz' },
-		{ id: 5, activity: 3, city: 'All' },
+		{ id: 1, activity: 'Factor Calculation', city: 'All' },
+		{ id: 2, activity: 'Data Collection', city: 'Cochabamba' },
+		{ id: 3, activity: 'Data Collection', city: 'La Paz' },
+		{ id: 4, activity: 'Data Collection', city: 'Santa Cruz' },
 	]);
 	const [selectedCourse, setSelectedCourse] = useState('');
 	const [selectedActivity, setSelectedActivity] = useState('');
@@ -198,19 +197,7 @@ export default function SaveExperimentDialog({
 				});
 			});
 			setActivitiesToShow(dataToShow);
-		} else if (filterId == 5) {
-			departmentsToSave.forEach((city) => {
-				dataToShow.push({
-					departmentName: city.departmentName,
-					data: city.activities[
-						city.activities.findIndex(
-							(activity) => activity.activityNumber == 3
-						)
-					],
-				});
-			});
-			setActivitiesToShow(dataToShow);
-		} else if (filterId > 1 && filterId < 5) {
+		} else if (filterId > 1) {
 			let selectedCity;
 			if (filterId == 2) {
 				selectedCity = 'Cochabamba';
@@ -271,7 +258,7 @@ export default function SaveExperimentDialog({
 	};
 
 	const getCurves = () => {
-		if (selectedActivity > 1 && selectedActivity < 5) {
+		if (selectedActivity > 1) {
 			if (activitiesToShow.length > 0) {
 				return activitiesToShow[0].data.efficiencyCurve;
 			} else {
@@ -295,7 +282,7 @@ export default function SaveExperimentDialog({
 	};
 
 	const getNames = () => {
-		if (selectedActivity > 1 && selectedActivity < 5) {
+		if (selectedActivity > 1) {
 			if (activitiesToShow.length > 0) {
 				return activitiesToShow[0].data.efficiencyCurve.map(
 					(curve) => curve[0].degree
@@ -454,7 +441,6 @@ export default function SaveExperimentDialog({
 								{activities.map((option) => (
 									<MenuItem key={option.id} value={option.id}>
 										<Typography variant='header3' color='blacky.main'>
-											{'Activity: '}
 											{option.activity}
 											{' - City: '}
 											{option.city}

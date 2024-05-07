@@ -75,7 +75,7 @@ export default function LineChart({
 			if (chartData[0]) {
 				if (chartData[i].length > 0) {
 					let color = getColor(names[i]);
-					if (selectedActivity > 1 && selectedActivity < 5) {
+					if (selectedActivity != 1) {
 						color = colors[i % 12];
 					}
 					const dataset = {

@@ -15,7 +15,6 @@ export default function DepartmentDataDialog({ activity }) {
 	const [radiation, setRadiation] = useState(0);
 	const [power, setPower] = useState(0);
 	const [uvaRadiation, setUvaRadiation] = useState(0);
-	const [optimalAngle, setOptimalAngle] = useState(0);
 	const [pvEfficiency, setPVEfficiency] = useState(0);
 	const [temperature, setTemperature] = useState(0);
 	useEffect(() => {
@@ -23,7 +22,6 @@ export default function DepartmentDataDialog({ activity }) {
 		setPower(activity.data.power);
 		setUvaRadiation(activity.data.uvaRadiation);
 		setRadiation(activity.data.radiation);
-		setOptimalAngle(activity.data.optimalAngle);
 		setPVEfficiency(activity.data.efficiencyPorcentaje);
 		setTemperature(activity.data.temperature);
 	}, []);
@@ -136,7 +134,7 @@ export default function DepartmentDataDialog({ activity }) {
 						</Grid>
 					) : null}
 
-					{activity.data.activityNumber == 3 ? (
+					{activity.data.activityNumber == 1 ? (
 						<Grid
 							item
 							xxs={12}
@@ -154,28 +152,6 @@ export default function DepartmentDataDialog({ activity }) {
 								color='blacky.main'
 							>
 								{pvEfficiency} %
-							</Typography>
-						</Grid>
-					) : null}
-
-					{activity.data.activityNumber == 2 ? (
-						<Grid
-							item
-							xxs={12}
-							xs={6}
-							s={6}
-							sx={{ gridDataStyle }}
-							mt={{ xxs: 1, xs: 1, sm: 2 }}
-						>
-							<Typography variant='buttonsExperiments' color='primary.700'>
-								Optimal Angle:
-							</Typography>
-							<Typography
-								ml={{ xxs: 1, xs: 1, sm: 2 }}
-								variant='dataDialog'
-								color='blacky.main'
-							>
-								{optimalAngle} °
 							</Typography>
 						</Grid>
 					) : null}

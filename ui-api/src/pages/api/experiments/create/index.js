@@ -39,7 +39,7 @@ export default async function handler(req, res) {
 							temperature: activity.temperature,
 							power: activity.power,
 							efficiencyPorcentaje: activity.efficiencyPorcentaje,
-							optimalAngle: activity.optimalAngle,
+							optimalAngle: 0,
 							uvaRadiation: activity.uvaRadiation,
 							radiation: activity.radiation,
 							cityLab: {

@@ -88,9 +88,8 @@ export default function DepartamentExperiment({
 	let previousTemperature;
 	const [value, setValue] = React.useState(0);
 	const activities = useRef([
-		{ data: [], maxPower: 0 },
-		{ data: [[]], optimalAngle: 0, angles: [], maxPowers: [] },
 		{ data: [], maxPower: 0, efficiency: 0 },
+		{ data: [[]], angles: [] },
 	]);
 	const panelArea = 0.613575; // 121.5 cm x 50.5 cm
 	const [angle, setAngle] = useState(0);
@@ -112,11 +111,6 @@ export default function DepartamentExperiment({
 	const [efficiency, setEfficiency] = useState(0);
 	const [efficiencyValidate, setEfficiencyValidate] = useState(false);
 	const [efficiencyShowValidate, setEfficiencyShowValidate] = useState(false);
-
-	const [optimalAngle, setOptimalAngle] = useState(0);
-	const [optimalAngleValidate, setOptimalAngleValidate] = useState(false);
-	const [optimalAngleShowValidate, setOptimalAngleShowValidate] =
-		useState(false);
 
 	const [experimentLoading, setExperimentLoading] = React.useState(false);
 	const [dataLoading, setDataLoading] = React.useState(true);
@@ -191,47 +185,21 @@ export default function DepartamentExperiment({
 	const clearFields = () => {
 		clearActivity1();
 		clearActivity2();
-		clearActivity3();
 		setValue(0);
 		activities.tabIndex = 0;
 	};
 	const clearActivity1 = () => {
-		activities.current[0] = { data: [], maxPower: 0 };
+		activities.current[0] = { data: [], maxPower: 0, efficiency: 0 };
 		setMaxPower(0);
 		setMaxPowerShowValidate(false);
+		setEfficiency(0);
+		setEfficiencyShowValidate(false);
 	};
 	const clearActivity2 = () => {
 		activities.current[1] = {
 			data: [],
-			optimalAngle: 0,
 			angles: [],
-			maxPowers: [],
 		};
-		setOptimalAngle(0);
-		setOptimalAngleShowValidate(false);
-	};
-	const clearActivity3 = () => {
-		activities.current[2] = { data: [], maxPower: 0, efficiency: 0 };
-		setEfficiency(0);
-		setEfficiencyShowValidate(false);
-	};
-
-	const getMaxIndex = (arr) => {
-		if (arr.length === 0) {
-			return -1;
-		}
-
-		var max = arr[0];
-		var maxIndex = 0;
-
-		for (var i = 1; i < arr.length; i++) {
-			if (arr[i] > max) {
-				maxIndex = i;
-				max = arr[i];
-			}
-		}
-
-		return maxIndex;
 	};
 
 	const dataHandler = (msg) => {
@@ -264,34 +232,16 @@ export default function DepartamentExperiment({
 						activities.current[0].maxPower = Math.max(
 							...efficiencyTestFilled.map((o) => o.power)
 						);
+						activities.current[0].efficiency =
+							(activities.current[0].maxPower /
+								(previousRadiation * Math.cos(previousAngle) * panelArea)) *
+							100;
 					} else if (activities.tabIndex == 1) {
 						activities.current[1].data.push(efficiencyTestFilled);
 						activities.current[1].angles.push(previousAngle);
-
-						activities.current[1].maxPowers.push(
-							Math.max(...efficiencyTestFilled.map((o) => o.power))
-						);
-						activities.current[1].optimalAngle =
-							activities.current[1].angles[
-								getMaxIndex(activities.current[1].maxPowers)
-							];
 						activities.current[1].radiation = previousRadiation;
 						activities.current[1].temperature = previousTemperature;
 						activities.current[1].uvaRadiation = previousUvaRadiation;
-					} else if (activities.tabIndex == 2) {
-						clearActivity3();
-						activities.current[2].data = efficiencyTestFilled;
-						activities.current[2].radiation = previousRadiation;
-						activities.current[2].uvaRadiation = previousUvaRadiation;
-						activities.current[2].temperature = previousTemperature;
-						activities.current[2].panelAngle = previousAngle;
-						activities.current[2].maxPower = Math.max(
-							...efficiencyTestFilled.map((o) => o.power)
-						);
-						activities.current[2].efficiency =
-							(activities.current[2].maxPower /
-								(previousRadiation * Math.cos(previousAngle) * panelArea)) *
-							100;
 					}
 					updateCityData(name);
 				} else {
@@ -323,6 +273,7 @@ export default function DepartamentExperiment({
 						Number(activities.current[0].uvaRadiation).toFixed(2) * 1,
 					radiation: Number(activities.current[0].radiation).toFixed(2) * 1,
 					efficiencyCurve: [activities.current[0].data],
+					efficiencyPorcentaje: 0,
 				},
 				{
 					activityNumber: 2,
@@ -332,17 +283,6 @@ export default function DepartamentExperiment({
 						Number(activities.current[1].uvaRadiation).toFixed(2) * 1,
 					radiation: Number(activities.current[1].radiation).toFixed(2) * 1,
 					efficiencyCurve: activities.current[1].data,
-				},
-				{
-					activityNumber: 3,
-					panelAngle: activities.current[2].panelAngle,
-					temperature: activities.current[2].temperature,
-					power: activities.current[2].maxPower,
-					efficiencyPorcentaje: 0,
-					uvaRadiation:
-						Number(activities.current[2].uvaRadiation).toFixed(2) * 1,
-					radiation: Number(activities.current[2].radiation).toFixed(2) * 1,
-					efficiencyCurve: [activities.current[2].data],
 				},
 			],
 		});
@@ -536,12 +476,12 @@ export default function DepartamentExperiment({
 	const handleEfficiencyChange = (event) => {
 		setNotSaved(true);
 		setEfficiency(event.target.value);
-		if (activities.current[2].data.length > 0) {
+		if (activities.current[0].data.length > 0) {
 			if (name == 'Cochabamba') {
 				setCBBAData((prevState) => ({
 					...prevState,
 					activities: prevState.activities.map((activity) =>
-						activity.activityNumber === 3
+						activity.activityNumber === 1
 							? {
 									...activity,
 									efficiencyPorcentaje:
@@ -554,7 +494,7 @@ export default function DepartamentExperiment({
 				setLPZData((prevState) => ({
 					...prevState,
 					activities: prevState.activities.map((activity) =>
-						activity.activityNumber === 3
+						activity.activityNumber === 1
 							? {
 									...activity,
 									efficiencyPorcentaje:
@@ -567,7 +507,7 @@ export default function DepartamentExperiment({
 				setSCZData((prevState) => ({
 					...prevState,
 					activities: prevState.activities.map((activity) =>
-						activity.activityNumber === 3
+						activity.activityNumber === 1
 							? {
 									...activity,
 									efficiencyPorcentaje:
@@ -577,69 +517,16 @@ export default function DepartamentExperiment({
 					),
 				}));
 			}
-			if (!activities.current[2].efficiency) {
+			if (!activities.current[0].efficiency) {
 				setEfficiencyShowValidate(false);
 			} else if (
-				Math.abs(event.target.value - activities.current[2].efficiency) < 0.5
+				Math.abs(event.target.value - activities.current[0].efficiency) < 0.5
 			) {
 				setEfficiencyShowValidate(true);
 				setEfficiencyValidate(true);
 			} else {
 				setEfficiencyShowValidate(true);
 				setEfficiencyValidate(false);
-			}
-		}
-	};
-
-	const handleOptimalAngleChange = (event) => {
-		setNotSaved(true);
-		setOptimalAngle(event.target.value);
-		if (activities.current[1].data.length > 0) {
-			if (name == 'Cochabamba') {
-				setCBBAData((prevState) => ({
-					...prevState,
-					activities: prevState.activities.map((activity) =>
-						activity.activityNumber === 2
-							? {
-									...activity,
-									optimalAngle: Number(event.target.value).toFixed(2) * 1,
-							  }
-							: activity
-					),
-				}));
-			} else if (name == 'La Paz') {
-				setLPZData((prevState) => ({
-					...prevState,
-					activities: prevState.activities.map((activity) =>
-						activity.activityNumber === 2
-							? {
-									...activity,
-									optimalAngle: Number(event.target.value).toFixed(2) * 1,
-							  }
-							: activity
-					),
-				}));
-			} else {
-				setSCZData((prevState) => ({
-					...prevState,
-					activities: prevState.activities.map((activity) =>
-						activity.activityNumber === 2
-							? {
-									...activity,
-									optimalAngle: Number(event.target.value).toFixed(2) * 1,
-							  }
-							: activity
-					),
-				}));
-			}
-			if (!activities.current[1].data > 0) {
-				setOptimalAngleShowValidate(false);
-			} else if (event.target.value == activities.current[1].optimalAngle) {
-				setOptimalAngleShowValidate(true);
-				setOptimalAngleValidate(true);
-			} else {
-				setOptimalAngleShowValidate(true);
-				setOptimalAngleValidate(false);
 			}
 		}
 	};
@@ -897,9 +784,8 @@ export default function DepartamentExperiment({
 									textColor='secondary'
 									indicatorColor='secondary'
 								>
-									<Tab label='Activity 1' sx={tabStyle} />
-									<Tab label='Activity 2' sx={tabStyle} />
-									<Tab label='Activity 3' sx={tabStyle} />
+									<Tab label='Factor Calculation' sx={tabStyle} />
+									<Tab label='Data Collection' sx={tabStyle} />
 								</Tabs>
 							</Box>
 							<TabPanel value={value} index={0} sx={{ width: '100%' }}>
@@ -1027,6 +913,64 @@ export default function DepartamentExperiment({
 													</Box>
 												)}
 											</Grid>
+											<Grid
+												item
+												ml={{ md: 0, lg: 1 }}
+												xxs={12}
+												xs={12}
+												sx={gridStyle}
+											>
+												<Typography
+													variant='titleDepartment'
+													color='primary.700'
+													mr={1}
+												>
+													PV Panel Efficiency:
+												</Typography>
+												<TextField
+													sx={{ width: '96px' }}
+													size='small'
+													type='text'
+													variant='standard'
+													color='primary'
+													value={efficiency}
+													onChange={handleEfficiencyChange}
+													InputProps={{
+														inputMode: 'numeric',
+														endAdornment: (
+															<InputAdornment position='end'>%</InputAdornment>
+														),
+													}}
+												></TextField>
+												{efficiencyValidate && efficiencyShowValidate && (
+													<Box ml={1}>
+														<CheckIcon
+															sx={{
+																fontSize: {
+																	xxs: '16px',
+																	xs: '20px',
+																	sm: '30px',
+																},
+															}}
+															color='success'
+														/>
+													</Box>
+												)}
+												{!efficiencyValidate && efficiencyShowValidate && (
+													<Box ml={1}>
+														<CloseIcon
+															sx={{
+																fontSize: {
+																	xxs: '16px',
+																	xs: '20px',
+																	sm: '30px',
+																},
+															}}
+															color='error'
+														/>
+													</Box>
+												)}
+											</Grid>
 										</Grid>
 									</Grid>
 
@@ -1058,7 +1002,7 @@ export default function DepartamentExperiment({
 										>
 											<Typography
 												sx={{
-													mx: { xxs: 3, xs: 3, s: 3, sm: 4, md: 4, lg: 4 },
+													mx: 1,
 												}}
 												variant='titleDepartment'
 												color='white'
@@ -1074,27 +1018,42 @@ export default function DepartamentExperiment({
 											style={{ textDecoration: 'none' }}
 										>
 											<Button
-												color='white'
 												variant='contained'
 												sx={{
+													bgcolor: 'primary.700',
 													textTransform: 'none',
-													border: 1,
-													borderColor: 'primary.700',
+													mr: 1,
 												}}
 											>
-												<Typography
-													variant='titleDepartment'
-													color='primary.700'
-													sx={{
-														'&:hover': {
-															color: '#fff',
-														},
-													}}
-												>
+												<Typography variant='titleDepartment' color='white'>
 													Download
 												</Typography>
 											</Button>
 										</CSVLink>
+										<LoadingButton
+											color='white'
+											variant='contained'
+											sx={{
+												textTransform: 'none',
+												border: 1,
+												borderColor: 'primary.700',
+											}}
+											onClick={() => {
+												clearActivity1();
+											}}
+										>
+											<Typography
+												color='primary.700'
+												sx={{
+													'&:hover': {
+														color: '#fff',
+													},
+												}}
+												variant='titleDepartment'
+											>
+												Clear
+											</Typography>
+										</LoadingButton>
 									</Grid>
 									<Grid
 										item
@@ -1257,93 +1216,15 @@ export default function DepartamentExperiment({
 												>
 													Procedure
 												</Typography>
-												<IconButton
-													sx={{
-														py: 0,
-														color: 'secondary.main',
-													}}
-													href='https://time.learnify.se/l/show.html#att/7jor?startId=jxEl&lang=en'
-													target='_blank'
-												>
-													<HelpIcon
-														sx={{
-															fontSize: {
-																xxs: '16px',
-																xs: '20px',
-																sm: '24px',
-															},
-														}}
-													/>
-												</IconButton>
 											</Grid>
 											<Grid item ml={{ md: 0, lg: 1 }} xxs={12} xs={12}>
 												<Typography
 													variant='dataDepartment'
 													color='blacky.main'
 												>
-													Take more than one IV-Curve with different tilt angles
-													and calculate the Optimal Tilt Angle, then verify your
-													result:
+													Take as many I-V Curves as you want and save it to
+													your account!
 												</Typography>
-											</Grid>
-
-											<Grid
-												item
-												ml={{ md: 0, lg: 1 }}
-												xxs={12}
-												xs={12}
-												sx={gridStyle}
-											>
-												<Typography
-													variant='titleDepartment'
-													color='primary.700'
-													mr={1}
-												>
-													Optimal Tilt Angle:
-												</Typography>
-												<TextField
-													sx={{ width: '96px' }}
-													size='small'
-													type='text'
-													variant='standard'
-													color='primary'
-													value={optimalAngle}
-													onChange={handleOptimalAngleChange}
-													InputProps={{
-														inputMode: 'numeric',
-														endAdornment: (
-															<InputAdornment position='end'>°</InputAdornment>
-														),
-													}}
-												></TextField>
-												{optimalAngleValidate && optimalAngleShowValidate && (
-													<Box ml={1}>
-														<CheckIcon
-															sx={{
-																fontSize: {
-																	xxs: '16px',
-																	xs: '20px',
-																	sm: '30px',
-																},
-															}}
-															color='success'
-														/>
-													</Box>
-												)}
-												{!optimalAngleValidate && optimalAngleShowValidate && (
-													<Box ml={1}>
-														<CloseIcon
-															sx={{
-																fontSize: {
-																	xxs: '16px',
-																	xs: '20px',
-																	sm: '30px',
-																},
-															}}
-															color='error'
-														/>
-													</Box>
-												)}
 											</Grid>
 										</Grid>
 									</Grid>
@@ -1388,7 +1269,7 @@ export default function DepartamentExperiment({
 										<CSVLink
 											data={[].concat.apply([], activities.current[1].data)}
 											headers={getColumns()}
-											filename={'Efficiency_Test.csv'}
+											filename={'Efficiency_Tests.csv'}
 											style={{ textDecoration: 'none' }}
 										>
 											<Button
@@ -1537,317 +1418,6 @@ export default function DepartamentExperiment({
 										xxs={12}
 										xs={12}
 										order={{ xxs: 5, xs: 5, s: 5, sm: 5, md: 5, lg: 6 }}
-										sx={gridStyle}
-									>
-										<Typography variant='titleDepartment' color='primary.700'>
-											PV Panel Temperature:
-										</Typography>
-										<Typography
-											ml={1}
-											variant='dataDepartment'
-											color='blacky.main'
-										>
-											{temperature} °C
-										</Typography>
-									</Grid>
-								</Grid>
-							</TabPanel>
-							<TabPanel value={value} index={2} sx={{ width: '100%' }}>
-								<Grid
-									container
-									columnSpacing={1}
-									rowSpacing={1}
-									sx={{ width: '100%' }}
-								>
-									<Grid item xxs={12} md={12} lg={8} order={1}>
-										<LineChart
-											key={activities.current[2].maxPower}
-											names={[name]}
-											chartData={[activities.current[2].data]}
-										></LineChart>
-									</Grid>
-
-									<Grid
-										item
-										xxs={12}
-										md={12}
-										lg={4}
-										order={{ xxs: 6, xs: 6, s: 6, sm: 6, md: 6, lg: 2 }}
-									>
-										<Grid container rowSpacing={1}>
-											<Grid
-												item
-												xxs={12}
-												xs={12}
-												ml={{ md: 0, lg: 1 }}
-												mt={1}
-												sx={gridStyle}
-											>
-												<Typography
-													variant='titleDepartment'
-													color='blacky.main'
-												>
-													Procedure
-												</Typography>
-												<IconButton
-													sx={{
-														py: 0,
-														color: 'secondary.main',
-													}}
-													href='https://time.learnify.se/l/show.html#att/7jor?startId=961a4d49-0676-4870-bcb7-62146dc19d0d&lang=en'
-													target='_blank'
-												>
-													<HelpIcon
-														sx={{
-															fontSize: {
-																xxs: '16px',
-																xs: '20px',
-																sm: '24px',
-															},
-														}}
-													/>
-												</IconButton>
-											</Grid>
-
-											<Grid item ml={{ md: 0, lg: 1 }} xxs={12} xs={12}>
-												<Typography
-													variant='dataDepartment'
-													color='blacky.main'
-												>
-													Take the IV-Curve and calculate the PV Panel Effiency,
-													then verify your result:
-												</Typography>
-											</Grid>
-
-											<Grid
-												item
-												ml={{ md: 0, lg: 1 }}
-												xxs={12}
-												xs={12}
-												sx={gridStyle}
-											>
-												<Typography
-													variant='titleDepartment'
-													color='primary.700'
-													mr={1}
-												>
-													PV Panel Efficiency:
-												</Typography>
-												<TextField
-													sx={{ width: '96px' }}
-													size='small'
-													type='text'
-													variant='standard'
-													color='primary'
-													value={efficiency}
-													onChange={handleEfficiencyChange}
-													InputProps={{
-														inputMode: 'numeric',
-														endAdornment: (
-															<InputAdornment position='end'>%</InputAdornment>
-														),
-													}}
-												></TextField>
-												{efficiencyValidate && efficiencyShowValidate && (
-													<Box ml={1}>
-														<CheckIcon
-															sx={{
-																fontSize: {
-																	xxs: '16px',
-																	xs: '20px',
-																	sm: '30px',
-																},
-															}}
-															color='success'
-														/>
-													</Box>
-												)}
-												{!efficiencyValidate && efficiencyShowValidate && (
-													<Box ml={1}>
-														<CloseIcon
-															sx={{
-																fontSize: {
-																	xxs: '16px',
-																	xs: '20px',
-																	sm: '30px',
-																},
-															}}
-															color='error'
-														/>
-													</Box>
-												)}
-											</Grid>
-										</Grid>
-									</Grid>
-
-									<Grid
-										item
-										xxs={12}
-										md={12}
-										lg={8}
-										justifyContent='center'
-										sx={{
-											display: 'flex',
-											alignItems: 'center',
-										}}
-										my={1}
-										order={{ xxs: 2, xs: 2, s: 2, sm: 2, md: 2, lg: 3 }}
-									>
-										<LoadingButton
-											loading={experimentLoading}
-											variant='contained'
-											sx={{
-												bgcolor: 'primary.700',
-												textTransform: 'none',
-												mr: 1,
-											}}
-											onClick={() => {
-												waitingExperiment('START');
-												sendMqttMessage('START');
-											}}
-										>
-											<Typography
-												sx={{
-													mx: { xxs: 3, xs: 3, s: 3, sm: 4, md: 4, lg: 4 },
-												}}
-												variant='titleDepartment'
-												color='white'
-											>
-												Start
-											</Typography>
-										</LoadingButton>
-
-										<CSVLink
-											data={activities.current[2].data}
-											headers={getColumns()}
-											filename={'Efficiency_Test.csv'}
-											style={{ textDecoration: 'none' }}
-										>
-											<Button
-												color='white'
-												variant='contained'
-												sx={{
-													textTransform: 'none',
-													border: 1,
-													borderColor: 'primary.700',
-												}}
-											>
-												<Typography
-													variant='titleDepartment'
-													color='primary.700'
-													sx={{
-														'&:hover': {
-															color: '#fff',
-														},
-													}}
-												>
-													Download
-												</Typography>
-											</Button>
-										</CSVLink>
-									</Grid>
-									<Grid item xxs={12} sm={6} order={4} sx={gridStyle}>
-										<Typography variant='titleDepartment' color='primary.700'>
-											Actual Radiation:
-										</Typography>
-										<Typography
-											ml={1}
-											variant='dataDepartment'
-											color='blacky.main'
-										>
-											{radiation} W/m2
-										</Typography>
-										<IconButton
-											onClick={handleClickRadiation}
-											sx={{
-												py: 0,
-												color: 'secondary.main',
-											}}
-										>
-											<MoreTimeIcon
-												sx={{
-													fontSize: { xxs: '16px', xs: '20px', sm: '30px' },
-												}}
-											/>
-										</IconButton>
-										<Popover
-											open={open}
-											anchorEl={anchorElRadiation}
-											anchorOrigin={{
-												vertical: 'top',
-												horizontal: 'center',
-											}}
-											transformOrigin={{
-												vertical: 'bottom',
-												horizontal: 'center',
-											}}
-											onClose={handleCloseRadiation}
-											disableRestoreFocus
-										>
-											<RadiationChart
-												title='Solar Radiation'
-												city={name}
-												type={typeRadiation}
-											></RadiationChart>
-										</Popover>
-									</Grid>
-									<Grid
-										item
-										xxs={12}
-										sm={6}
-										order={5}
-										sx={gridStyle}
-										justifyContent={{ s: 'left', sm: 'flex-end' }}
-									>
-										<Typography variant='titleDepartment' color='primary.700'>
-											Actual UVA Radiation:
-										</Typography>
-										<Typography
-											ml={1}
-											variant='dataDepartment'
-											color='blacky.main'
-										>
-											{uvaRadiation} W/m2
-										</Typography>
-										<IconButton
-											onClick={handleClickUVARadiation}
-											sx={{
-												py: 0,
-												color: 'secondary.main',
-											}}
-										>
-											<MoreTimeIcon
-												sx={{
-													fontSize: { xxs: '16px', xs: '20px', sm: '30px' },
-												}}
-											/>
-										</IconButton>
-										<Popover
-											open={openUVA}
-											anchorEl={anchorElUVA}
-											anchorOrigin={{
-												vertical: 'top',
-												horizontal: 'center',
-											}}
-											transformOrigin={{
-												vertical: 'bottom',
-												horizontal: 'center',
-											}}
-											onClose={handleCloseUVARadiation}
-											disableRestoreFocus
-										>
-											<RadiationChart
-												title='UVA Radiation'
-												city={name}
-												type={typeUVAradiation}
-											></RadiationChart>
-										</Popover>
-									</Grid>
-									<Grid
-										item
-										xxs={12}
-										xs={12}
-										order={{ xxs: 3, xs: 3, s: 3, sm: 3, md: 3, lg: 6 }}
 										sx={gridStyle}
 									>
 										<Typography variant='titleDepartment' color='primary.700'>
