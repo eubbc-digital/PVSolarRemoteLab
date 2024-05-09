@@ -86,6 +86,7 @@ export default function DepartamentExperiment({
 	let previousUvaRadiation;
 	let previousAngle;
 	let previousTemperature;
+	let counterError;
 	const [value, setValue] = React.useState(0);
 	const activities = useRef([
 		{ data: [], maxPower: 0, efficiency: 0 },
@@ -113,6 +114,7 @@ export default function DepartamentExperiment({
 	const [efficiencyShowValidate, setEfficiencyShowValidate] = useState(false);
 
 	const [experimentLoading, setExperimentLoading] = React.useState(false);
+	const [motorLoading, setMotorLoading] = React.useState(false);
 	const [dataLoading, setDataLoading] = React.useState(true);
 	const [env, setEnv] = useState(null);
 
@@ -245,6 +247,18 @@ export default function DepartamentExperiment({
 					}
 					updateCityData(name);
 				} else {
+					if (Math.abs(activities.sentAngle - previousAngle) < 3) {
+						setMotorLoading(false);
+					}
+					if (motorLoading && previousAngle == receivedData.panelangle) {
+						counterError += 1;
+						if (counterError > 40) {
+							toast.error('Error Moving Panel, Try Again');
+							setMotorLoading(false);
+						}
+					} else {
+						counterError = 0;
+					}
 					previousAngle = receivedData.panelangle;
 					previousRadiation = Number(receivedData.radiation).toFixed(2) * 1;
 					previousTemperature = Number(receivedData.temperature).toFixed(2) * 1;
@@ -304,10 +318,13 @@ export default function DepartamentExperiment({
 				'You can only perform Efficiency Experiments when radiation is greater than 150'
 			);
 		} else {
-			if (syncPanels && action != 'START') {
-				department = 'ALL';
-			} else {
-				selectedAngle = departmentSelectedAngle;
+			if (action == 'ANGLE') {
+				if (syncPanels) {
+					department = 'ALL';
+				} else {
+					selectedAngle = departmentSelectedAngle;
+				}
+				activities.sentAngle = selectedAngle;
 			}
 			const message = {
 				action: action,
@@ -339,6 +356,10 @@ export default function DepartamentExperiment({
 
 	const handleChange = (event) => {
 		setSyncPanels(event.target.checked);
+	};
+
+	const motorMoving = () => {
+		return dataLoading || motorLoading;
 	};
 
 	const handleClickUVARadiation = (event) => {
@@ -734,13 +755,14 @@ export default function DepartamentExperiment({
 									</Grid>
 									<Grid item textAlign='center'>
 										<LoadingButton
-											loading={dataLoading}
+											loading={motorMoving()}
 											variant='contained'
 											sx={{
 												textTransform: 'none',
 												bgcolor: 'primary.700',
 											}}
 											onClick={() => {
+												setMotorLoading(true);
 												sendMqttMessage('ANGLE');
 											}}
 										>
@@ -784,7 +806,7 @@ export default function DepartamentExperiment({
 									textColor='secondary'
 									indicatorColor='secondary'
 								>
-									<Tab label='Factor Calculation' sx={tabStyle} />
+									<Tab label='Activities' sx={tabStyle} />
 									<Tab label='Data Collection' sx={tabStyle} />
 								</Tabs>
 							</Box>
