@@ -92,7 +92,7 @@ export default function DepartamentExperiment({
 		{ data: [], maxPower: 0, efficiency: 0 },
 		{ data: [[]], angles: [] },
 	]);
-	const panelArea = 0.613575; // 121.5 cm x 50.5 cm
+	const panelArea = 0.6671; // 0.06671 m2 = 1224 mm x 545 mm
 	const [angle, setAngle] = useState(0);
 	const [uvaRadiation, setUvaRadiation] = useState(0);
 	const [radiation, setRadiation] = useState(0);
