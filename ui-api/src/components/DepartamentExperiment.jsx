@@ -819,6 +819,7 @@ export default function DepartamentExperiment({
 								>
 									<Grid item xxs={12} md={12} lg={8} order={1}>
 										<LineChart
+											selectedActivity={1}
 											key={activities.current[0].maxPower}
 											names={[name]}
 											chartData={[activities.current[0].data]}
