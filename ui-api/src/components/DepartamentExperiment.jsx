@@ -138,6 +138,7 @@ export default function DepartamentExperiment({
 
 	useEffect(() => {
 		getEnvVariables();
+		clearFields();
 		if (name == 'Cochabamba') {
 			setTypeRadiation('solarRadiationCMPAvg');
 			setTypeUVAradiation('uvaRadiationLPAvg');
@@ -1245,8 +1246,9 @@ export default function DepartamentExperiment({
 													variant='dataDepartment'
 													color='blacky.main'
 												>
-													Take as many I-V Curves as you want and save it to
-													your account!
+													Take as many I-V Curves as you want with different
+													angles and save it to your account or download the
+													data in an excel file!
 												</Typography>
 											</Grid>
 										</Grid>

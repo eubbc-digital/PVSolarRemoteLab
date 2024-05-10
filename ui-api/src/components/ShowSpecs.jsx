@@ -47,7 +47,7 @@ export default function ShowSpecs({ city }) {
 				flexGrow: 1,
 				bgcolor: 'background.paper',
 				display: 'flex',
-				maxWidth: '40vh',
+				maxWidth: '45vh',
 			}}
 		>
 			<AppBar position='static' color='white'>
@@ -124,7 +124,7 @@ export default function ShowSpecs({ city }) {
 										color='blacky.main'
 										component={'span'}
 									>
-										Used Current Angle:
+										Used Angle:
 									</Typography>
 								</Grid>
 								<Grid
@@ -181,6 +181,18 @@ export default function ShowSpecs({ city }) {
 									</Typography>
 								</Grid>
 
+								<Grid item xxs={12} xs={12}>
+									<Typography
+										variant='titleDepartment'
+										color='blacky.main'
+										mr={1}
+									>
+										Dimensions:
+									</Typography>
+									<Typography variant='dataDepartment' color='blacky.main'>
+										1.224 x 545 x 39,5 mm
+									</Typography>
+								</Grid>
 								<Grid item xxs={12} xs={12}>
 									<Typography
 										variant='titleDepartment'
