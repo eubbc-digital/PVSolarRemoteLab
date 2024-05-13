@@ -34,7 +34,7 @@ export default function Teacherexperiments() {
 	const [teacherCourses, setTeacherCourses] = useState([]);
 	const [selectedActivity, setSelectedActivity] = useState('');
 	const [activities, setActivities] = useState([
-		{ id: 1, activity: 'Factor Calculation', city: 'All' },
+		{ id: 1, activity: 'Activities', city: 'All' },
 		{ id: 2, activity: 'Data Collection', city: 'Cochabamba' },
 		{ id: 3, activity: 'Data Collection', city: 'La Paz' },
 		{ id: 4, activity: 'Data Collection', city: 'Santa Cruz' },

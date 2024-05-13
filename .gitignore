@@ -3,6 +3,7 @@
 
 variables.env
 variables-nonginx.env
+.env
 
 ### Database ###
 *.accdb

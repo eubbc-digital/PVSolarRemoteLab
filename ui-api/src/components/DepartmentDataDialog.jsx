@@ -37,29 +37,12 @@ export default function DepartmentDataDialog({ activity }) {
 
 					<Grid
 						item
-						xxs={12}
-						xs={6}
-						s={6}
-						sx={{ gridDataStyle }}
-						mt={{ xxs: 1, xs: 1, sm: 2 }}
-					>
-						<Typography variant='buttonsExperiments' color='primary.700'>
-							UVA Radiation:
-						</Typography>
-						<Typography
-							ml={{ xxs: 1, xs: 1, sm: 1 }}
-							variant='body3'
-							color='blacky.main'
-						>
-							{uvaRadiation} W/m2
-						</Typography>
-					</Grid>
-					<Grid
-						item
 						sx={{ gridDataStyle }}
 						xxs={12}
 						xs={6}
 						s={6}
+						sm={6}
+						md={4}
 						mt={{ xxs: 1, xs: 1, sm: 2 }}
 					>
 						<Typography variant='buttonsExperiments' color='primary.700'>
@@ -75,9 +58,32 @@ export default function DepartmentDataDialog({ activity }) {
 					</Grid>
 					<Grid
 						item
+						xxs={12}
+						xs={6}
+						s={6}
+						sm={6}
+						md={4}
+						sx={{ gridDataStyle }}
+						mt={{ xxs: 1, xs: 1, sm: 2 }}
+					>
+						<Typography variant='buttonsExperiments' color='primary.700'>
+							UVA:
+						</Typography>
+						<Typography
+							ml={{ xxs: 1, xs: 1, sm: 1 }}
+							variant='body3'
+							color='blacky.main'
+						>
+							{uvaRadiation} W/m2
+						</Typography>
+					</Grid>
+					<Grid
+						item
 						sx={{ gridDataStyle }}
 						xxs={12}
 						xs={6}
+						sm={6}
+						md={4}
 						mt={{ xxs: 1, xs: 1, sm: 2 }}
 					>
 						<Typography variant='buttonsExperiments' color='primary.700'>
@@ -91,12 +97,14 @@ export default function DepartmentDataDialog({ activity }) {
 							{temperature} °C
 						</Typography>
 					</Grid>
-					{activity.data.activityNumber == 2 ? null : (
+					{activity.data.activityNumber == 1 ? (
 						<Grid
 							item
 							xxs={12}
 							xs={6}
 							s={6}
+							sm={6}
+							md={4}
 							sx={{ gridDataStyle }}
 							mt={{ xxs: 1, xs: 1, sm: 2 }}
 						>
@@ -111,13 +119,15 @@ export default function DepartmentDataDialog({ activity }) {
 								{angle} °
 							</Typography>
 						</Grid>
-					)}
+					) : null}
 					{activity.data.activityNumber == 1 ? (
 						<Grid
 							item
 							xxs={12}
 							xs={6}
 							s={6}
+							sm={6}
+							md={4}
 							sx={{ gridDataStyle }}
 							mt={{ xxs: 1, xs: 1, sm: 2 }}
 						>
@@ -140,6 +150,8 @@ export default function DepartmentDataDialog({ activity }) {
 							xxs={12}
 							xs={6}
 							s={6}
+							sm={6}
+							md={4}
 							sx={{ gridDataStyle }}
 							mt={{ xxs: 1, xs: 1, sm: 2 }}
 						>
