@@ -5,7 +5,7 @@ services:
     container_name: "SolarLab_Broker"
     user: root
     ports:
-      - 1883:1883
+      - ${MQTT_PORT}:${MQTT_PORT}
     volumes:
       - ./Broker/mosquitto.conf:/mosquitto/config/mosquitto.conf
     restart: always
@@ -18,7 +18,7 @@ services:
     container_name: "SolarLab_Database"
     user: root
     ports:
-      - 3307:3306
+      - ${DATABASE_PORT}:3306
     restart: always
     command: --local-infile=ON
     env_file:
@@ -59,11 +59,11 @@ services:
     restart: always
     user: root
     ports:
-      - 3001:3001
-      - 4000:4000
-      - 8888:8888
-      - 7777:7777
-      - 9999:9999
+      - ${NEXT_PUBLIC_PORT}:${NEXT_PUBLIC_PORT}
+      - ${NEXT_PUBLIC_WS_SERVER_PORT}:${NEXT_PUBLIC_WS_SERVER_PORT}
+      - ${NEXT_PUBLIC_WSPORTCBBA}:${NEXT_PUBLIC_WSPORTCBBA}
+      - ${NEXT_PUBLIC_WSPORTLPZ}:${NEXT_PUBLIC_WSPORTLPZ}
+      - ${NEXT_PUBLIC_WSPORTSCZ}:${NEXT_PUBLIC_WSPORTSCZ}
     depends_on:
       database:
         condition: service_healthy
@@ -80,10 +80,10 @@ services:
     restart: always
     user: root
     ports:
-      - 8002:8002
+      - ${GRAFANA_PORT}:${GRAFANA_PORT}
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_SERVER_HTTP_PORT=8002
+      - GF_SERVER_HTTP_PORT=${GRAFANA_PORT}
     depends_on:
       database:
         condition: service_healthy

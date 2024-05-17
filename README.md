@@ -88,11 +88,11 @@ Next, run the rest of the services. Go back to the PVSolarRemoteLab directory an
 
 If you use Nginx, you should use the command:
 
-`docker-compose -f docker-compose.yml up -d --build`
+`docker compose --env-file variables.env  -f docker-compose.yml up --build`
 
 If you don't use, Nginx you should use the command:
 
-`docker-compose -f docker-compose-nonginx.yml up -d --build`
+`docker compose --env-file variables-nonginx.env  -f docker-compose-nonginx.yml up --build`
 
 Now, you have all the services of the PV Solar Remote Lab running.
 
@@ -102,11 +102,11 @@ The remote lab service works with a base-path (solar-lab), so you can enter to t
 
 If you use Nginx, you should use the command to stop the services:
 
-`docker-compose -f docker-compose.yml down`
+`docker compose --env-file variables.env  -f docker-compose.yml down`
 
 If you don't use, Nginx you should use the command to stop the services:
 
-`docker-compose -f docker-compose-nonginx.yml down`
+`docker compose --env-file variables-nonginx.env  -f docker-compose-nonginx.yml down`
 
 ## Authors
 
