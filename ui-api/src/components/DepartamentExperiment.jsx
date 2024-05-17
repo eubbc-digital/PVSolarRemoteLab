@@ -250,7 +250,9 @@ export default function DepartamentExperiment({
 					}
 					updateCityData(name);
 				} else {
-					if (Math.abs(activities.sentAngle - previousAngle) < 3) {
+					if (receivedData.isMoving) {
+						setMotorLoading(true);
+					} else {
 						setMotorLoading(false);
 					}
 					if (motorLoading && previousAngle == receivedData.panelangle) {
@@ -317,9 +319,7 @@ export default function DepartamentExperiment({
 		if (action == 'START' && radiation < 150) {
 			activities.loading = false;
 			setExperimentLoading(false);
-			toast.info(
-				'You can only perform Efficiency Experiments when radiation is greater than 150'
-			);
+			toast.info('Radiation is to low...');
 		} else {
 			if (action == 'ANGLE') {
 				if (syncPanels) {

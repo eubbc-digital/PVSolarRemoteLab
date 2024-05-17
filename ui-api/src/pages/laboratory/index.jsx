@@ -205,7 +205,7 @@ export default function Laboratory() {
 					return false;
 				}
 			} else {
-				toast.error('Teachers cant Save Experiments');
+				toast.info('Teachers cannot save Experiments');
 				return false;
 			}
 		}
