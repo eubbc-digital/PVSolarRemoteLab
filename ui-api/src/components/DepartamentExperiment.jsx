@@ -837,15 +837,8 @@ export default function DepartamentExperiment({
 										order={{ xxs: 6, xs: 6, s: 6, sm: 6, md: 6, lg: 2 }}
 									>
 										{activities.current[0].panelAngle ? (
-											<Grid container>
-												<Grid
-													item
-													xxs={12}
-													xs={12}
-													ml={{ md: 0, lg: 1 }}
-													mt={1}
-													sx={gridStyle}
-												>
+											<Grid container ml={{ md: 0, lg: 1 }}>
+												<Grid item xxs={12} xs={12} mt={1} sx={gridStyle}>
 													<Typography
 														variant='titleDepartment'
 														color='blacky.main'
@@ -856,14 +849,13 @@ export default function DepartamentExperiment({
 
 												<Grid
 													item
-													ml={{ md: 0, lg: 1 }}
 													xxs={12}
 													xs={12}
 													sm={6}
 													md={6}
 													lg={12}
+													mt={2}
 													sx={gridStyle}
-													mt={1}
 												>
 													<Typography
 														variant='titleDepartment'
@@ -881,14 +873,14 @@ export default function DepartamentExperiment({
 												</Grid>
 												<Grid
 													item
+													container
 													xxs={12}
 													xs={12}
 													sm={6}
 													md={6}
 													lg={12}
 													sx={gridStyle}
-													ml={{ md: 0, lg: 1 }}
-													mt={1}
+													mt={2}
 												>
 													<Typography
 														variant='titleDepartment'
@@ -897,20 +889,20 @@ export default function DepartamentExperiment({
 														UVA:
 													</Typography>
 													<Typography
-														ml={1}
 														variant='dataDepartment'
 														color='blacky.main'
+														ml={1}
 													>
 														{activities.current[0].uvaRadiation} W/m2
 													</Typography>
 												</Grid>
 												<Grid
 													item
-													ml={{ md: 0, lg: 1 }}
 													xxs={12}
 													xs={12}
 													sx={gridStyle}
-													mt={1}
+													my={2}
+													mb={2}
 												>
 													<Typography
 														variant='titleDepartment'
@@ -928,162 +920,138 @@ export default function DepartamentExperiment({
 												</Grid>
 											</Grid>
 										) : null}
-
-										<Grid
-											item
-											xxs={12}
-											xs={12}
-											ml={{ md: 0, lg: 1 }}
-											mt={1}
-											sx={gridStyle}
-										>
-											<Typography variant='titleDepartment' color='blacky.main'>
-												Procedure
-											</Typography>
-											<IconButton
-												sx={{
-													py: 0,
-													color: 'secondary.main',
-												}}
-												href='https://time.learnify.se/l/show.html#att/7jor?startId=070e42be-8d2d-451c-81d6-35864b3d3486&lang=en'
-												target='_blank'
-											>
-												<HelpIcon
+										<Grid container ml={{ md: 0, lg: 1 }} rowSpacing={1}>
+											<Grid item xxs={12} xs={12} sx={gridStyle}>
+												<Typography
+													variant='titleDepartment'
+													color='blacky.main'
+												>
+													Procedure
+												</Typography>
+												<IconButton
 													sx={{
-														fontSize: {
-															xxs: '16px',
-															xs: '20px',
-															sm: '24px',
-														},
+														py: 0,
+														color: 'secondary.main',
 													}}
-												/>
-											</IconButton>
-										</Grid>
+													href='https://time.learnify.se/l/show.html#att/7jor?startId=070e42be-8d2d-451c-81d6-35864b3d3486&lang=en'
+													target='_blank'
+												>
+													<HelpIcon
+														sx={{
+															fontSize: {
+																xxs: '16px',
+																xs: '20px',
+																sm: '24px',
+															},
+														}}
+													/>
+												</IconButton>
+											</Grid>
 
-										<Grid item ml={{ md: 0, lg: 1 }} mt={1} xxs={12} xs={12}>
-											<Typography variant='dataDepartment' color='blacky.main'>
-												Take the IV-Curve and calculate its MPP, then verify
-												your result:
-											</Typography>
-										</Grid>
-
-										<Grid
-											item
-											ml={{ md: 0, lg: 1 }}
-											xxs={12}
-											xs={12}
-											sx={gridStyle}
-											mt={1}
-										>
-											<Typography
-												variant='titleDepartment'
-												color='primary.700'
-												mr={1}
-											>
-												Maximum Power Point:
-											</Typography>
-											<TextField
-												sx={{ width: '96px' }}
-												size='small'
-												type='text'
-												color='primary'
-												variant='standard'
-												value={maxPower}
-												onChange={handleMaxPowerChange}
-												InputProps={{
-													inputMode: 'numeric',
-													endAdornment: (
-														<InputAdornment position='end'>W</InputAdornment>
-													),
-												}}
-											></TextField>
-											{maxPowerValidate && maxPowerShowValidate && (
-												<Box ml={1}>
-													<CheckIcon
-														sx={{
-															fontSize: {
-																xxs: '16px',
-																xs: '20px',
-																sm: '30px',
-															},
-														}}
-														color='success'
-													/>
-												</Box>
-											)}
-											{!maxPowerValidate && maxPowerShowValidate && (
-												<Box ml={1}>
-													<CloseIcon
-														sx={{
-															fontSize: {
-																xxs: '16px',
-																xs: '20px',
-																sm: '30px',
-															},
-														}}
-														color='error'
-													/>
-												</Box>
-											)}
-										</Grid>
-										<Grid
-											item
-											ml={{ md: 0, lg: 1 }}
-											xxs={12}
-											xs={12}
-											sx={gridStyle}
-											mt={1}
-										>
-											<Typography
-												variant='titleDepartment'
-												color='primary.700'
-												mr={1}
-											>
-												PV Panel Efficiency:
-											</Typography>
-											<TextField
-												sx={{ width: '96px' }}
-												size='small'
-												type='text'
-												variant='standard'
-												color='primary'
-												value={efficiency}
-												onChange={handleEfficiencyChange}
-												InputProps={{
-													inputMode: 'numeric',
-													endAdornment: (
-														<InputAdornment position='end'>%</InputAdornment>
-													),
-												}}
-											></TextField>
-											{efficiencyValidate && efficiencyShowValidate && (
-												<Box ml={1}>
-													<CheckIcon
-														sx={{
-															fontSize: {
-																xxs: '16px',
-																xs: '20px',
-																sm: '30px',
-															},
-														}}
-														color='success'
-													/>
-												</Box>
-											)}
-											{!efficiencyValidate && efficiencyShowValidate && (
-												<Box ml={1}>
-													<CloseIcon
-														sx={{
-															fontSize: {
-																xxs: '16px',
-																xs: '20px',
-																sm: '30px',
-															},
-														}}
-														color='error'
-													/>
-												</Box>
-											)}
+											<Grid item xxs={12} xs={12} sx={gridStyle}>
+												<Typography
+													variant='titleDepartment'
+													color='primary.700'
+													mr={1}
+												>
+													Maximum Power Point:
+												</Typography>
+												<TextField
+													sx={{ width: '80px' }}
+													size='small'
+													type='text'
+													color='primary'
+													variant='standard'
+													value={maxPower}
+													onChange={handleMaxPowerChange}
+													InputProps={{
+														inputMode: 'numeric',
+														endAdornment: (
+															<InputAdornment position='end'>W</InputAdornment>
+														),
+													}}
+												></TextField>
+												{maxPowerValidate && maxPowerShowValidate && (
+													<Box ml={1}>
+														<CheckIcon
+															sx={{
+																fontSize: {
+																	xxs: '16px',
+																	xs: '20px',
+																	sm: '30px',
+																},
+															}}
+															color='success'
+														/>
+													</Box>
+												)}
+												{!maxPowerValidate && maxPowerShowValidate && (
+													<Box ml={1}>
+														<CloseIcon
+															sx={{
+																fontSize: {
+																	xxs: '16px',
+																	xs: '20px',
+																	sm: '30px',
+																},
+															}}
+															color='error'
+														/>
+													</Box>
+												)}
+											</Grid>
+											<Grid item xxs={12} xs={12} sx={gridStyle}>
+												<Typography
+													variant='titleDepartment'
+													color='primary.700'
+													mr={1}
+												>
+													PV Panel Efficiency:
+												</Typography>
+												<TextField
+													sx={{ width: '80px' }}
+													size='small'
+													type='text'
+													variant='standard'
+													color='primary'
+													value={efficiency}
+													onChange={handleEfficiencyChange}
+													InputProps={{
+														inputMode: 'numeric',
+														endAdornment: (
+															<InputAdornment position='end'>%</InputAdornment>
+														),
+													}}
+												></TextField>
+												{efficiencyValidate && efficiencyShowValidate && (
+													<Box ml={1}>
+														<CheckIcon
+															sx={{
+																fontSize: {
+																	xxs: '16px',
+																	xs: '20px',
+																	sm: '30px',
+																},
+															}}
+															color='success'
+														/>
+													</Box>
+												)}
+												{!efficiencyValidate && efficiencyShowValidate && (
+													<Box ml={1}>
+														<CloseIcon
+															sx={{
+																fontSize: {
+																	xxs: '16px',
+																	xs: '20px',
+																	sm: '30px',
+																},
+															}}
+															color='error'
+														/>
+													</Box>
+												)}
+											</Grid>
 										</Grid>
 									</Grid>
 
@@ -1314,15 +1282,8 @@ export default function DepartamentExperiment({
 										lg={4}
 										order={{ xxs: 6, xs: 6, s: 6, sm: 6, md: 6, lg: 2 }}
 									>
-										<Grid container rowSpacing={1}>
-											<Grid
-												item
-												xxs={12}
-												xs={12}
-												ml={{ md: 0, lg: 1 }}
-												mt={1}
-												sx={gridStyle}
-											>
+										<Grid container ml={{ md: 0, lg: 1 }}>
+											<Grid item xxs={12} xs={12} mt={1} sx={gridStyle}>
 												<Typography
 													variant='titleDepartment'
 													color='blacky.main'
@@ -1330,7 +1291,7 @@ export default function DepartamentExperiment({
 													Procedure
 												</Typography>
 											</Grid>
-											<Grid item ml={{ md: 0, lg: 1 }} xxs={12} xs={12}>
+											<Grid xxs={12} xs={12} mt={1}>
 												<Typography
 													variant='dataDepartment'
 													color='blacky.main'
