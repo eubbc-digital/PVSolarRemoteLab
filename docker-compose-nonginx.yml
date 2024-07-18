@@ -52,6 +52,22 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+  cameras:
+    container_name: "SolarLab_Cameras"
+    restart: always
+    user: root
+    build:
+      context: ./StreamCameras
+    env_file:
+      - variables-nonginx.env
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    ports:
+      - ${NEXT_PUBLIC_WSPORTCBBA}:${NEXT_PUBLIC_WSPORTCBBA}
+      - ${NEXT_PUBLIC_WSPORTLPZ}:${NEXT_PUBLIC_WSPORTLPZ}
+      - ${NEXT_PUBLIC_WSPORTSCZ}:${NEXT_PUBLIC_WSPORTSCZ}
   server:
     container_name: "SolarLab_Server"
     build:
@@ -61,9 +77,6 @@ services:
     ports:
       - ${NEXT_PUBLIC_PORT}:${NEXT_PUBLIC_PORT}
       - ${NEXT_PUBLIC_WS_SERVER_PORT}:${NEXT_PUBLIC_WS_SERVER_PORT}
-      - ${NEXT_PUBLIC_WSPORTCBBA}:${NEXT_PUBLIC_WSPORTCBBA}
-      - ${NEXT_PUBLIC_WSPORTLPZ}:${NEXT_PUBLIC_WSPORTLPZ}
-      - ${NEXT_PUBLIC_WSPORTSCZ}:${NEXT_PUBLIC_WSPORTSCZ}
     depends_on:
       database:
         condition: service_healthy

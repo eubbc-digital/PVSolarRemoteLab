@@ -104,15 +104,10 @@ export default function Laboratory() {
 	useEffect(() => {
 		checkAccess();
 		connectMQTT();
-		connectCameras();
 	}, []);
 
 	const connectMQTT = async () => {
 		await fetch(`/solar-lab/api/mqtt/connect`);
-	};
-
-	const connectCameras = async () => {
-		await fetch(`/solar-lab/api/camera`);
 	};
 
 	const checkAccess = () => {

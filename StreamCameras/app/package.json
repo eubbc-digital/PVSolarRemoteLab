@@ -1,0 +1,6 @@
+{
+    "dependencies": {
+        "node-rtsp-stream": "https://github.com/AndresGamboaBaldi/node-rtsp-stream/tarball/master"
+    }
+  }
+  

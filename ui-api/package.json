@@ -35,7 +35,6 @@
     "next": "13.2.4",
     "next-auth": "^4.22.1",
     "next-connect": "^1.0.0",
-    "node-rtsp-stream": "https://github.com/AndresGamboaBaldi/node-rtsp-stream/tarball/master",
     "nodemailer": "^6.9.4",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
