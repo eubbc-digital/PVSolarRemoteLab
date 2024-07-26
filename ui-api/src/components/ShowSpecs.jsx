@@ -99,56 +99,6 @@ export default function ShowSpecs({ city }) {
 					>
 						<TabPanel value={value} index={0}>
 							<Grid container>
-								<Grid
-									item
-									xxs={12}
-									xs={12}
-									sx={{
-										display: 'flex',
-										alignItems: 'center',
-									}}
-									justifyContent='center'
-								>
-									<Typography
-										variant='titleDepartment'
-										color='primary.700'
-										mt={2}
-										component={'span'}
-									>
-										Information
-									</Typography>
-								</Grid>
-								<Grid item xxs={12} xs={12}>
-									<Typography
-										variant='titleDepartment'
-										color='blacky.main'
-										component={'span'}
-									>
-										Used Angle:
-									</Typography>
-								</Grid>
-								<Grid
-									item
-									xxs={12}
-									xs={12}
-									sx={{
-										display: 'flex',
-										alignItems: 'center',
-									}}
-									justifyContent='center'
-									my={1}
-								>
-									<Image
-										src='/solar-lab/angle.png'
-										alt='Angle Info'
-										width={264}
-										height={320}
-									/>
-								</Grid>
-							</Grid>
-						</TabPanel>
-						<TabPanel value={value} index={1}>
-							<Grid container>
 								<Grid item xxs={12} xs={12} mt={2}>
 									<Grid
 										item
@@ -265,7 +215,7 @@ export default function ShowSpecs({ city }) {
 								>
 									<Button
 										variant='contained'
-										href='https://www.pvxchange.com/Solar-Modules/Isofoton/UL-I-75S-12_1-2100261'
+										href='https://drive.google.com/file/d/1n062ERM91ZVwCC4tC17eulkaprrZm3_R/view?usp=sharing'
 										target='_blank'
 										sx={{
 											bgcolor: 'primary.700',
@@ -273,12 +223,63 @@ export default function ShowSpecs({ city }) {
 										}}
 									>
 										<Typography variant='buttons2' color='white'>
-											More Info
+											Datasheet
 										</Typography>
 									</Button>
 								</Grid>
 							</Grid>
 						</TabPanel>
+						<TabPanel value={value} index={1}>
+							<Grid container>
+								<Grid
+									item
+									xxs={12}
+									xs={12}
+									sx={{
+										display: 'flex',
+										alignItems: 'center',
+									}}
+									justifyContent='center'
+								>
+									<Typography
+										variant='titleDepartment'
+										color='primary.700'
+										mt={2}
+										component={'span'}
+									>
+										Information
+									</Typography>
+								</Grid>
+								<Grid item xxs={12} xs={12}>
+									<Typography
+										variant='titleDepartment'
+										color='blacky.main'
+										component={'span'}
+									>
+										Used Angle:
+									</Typography>
+								</Grid>
+								<Grid
+									item
+									xxs={12}
+									xs={12}
+									sx={{
+										display: 'flex',
+										alignItems: 'center',
+									}}
+									justifyContent='center'
+									my={1}
+								>
+									<Image
+										src='/solar-lab/angle.png'
+										alt='Angle Info'
+										width={264}
+										height={320}
+									/>
+								</Grid>
+							</Grid>
+						</TabPanel>
+
 						<TabPanel value={value} index={2}>
 							<Grid container>
 								<Grid

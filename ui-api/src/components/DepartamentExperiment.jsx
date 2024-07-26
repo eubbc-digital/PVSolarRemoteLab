@@ -23,6 +23,7 @@ import RadiationChart from './RadiationChart';
 import React, { useState, useEffect, useRef } from 'react';
 import CameraPlayer from '../components/CameraPlayer';
 import HelpIcon from '@mui/icons-material/Help';
+import DownloadIcon from '@mui/icons-material/Download';
 import InfoIcon from '@mui/icons-material/Info';
 import ShowSpecs from './ShowSpecs';
 import { io } from 'socket.io-client';
@@ -937,6 +938,32 @@ export default function DepartamentExperiment({
 													target='_blank'
 												>
 													<HelpIcon
+														sx={{
+															fontSize: {
+																xxs: '16px',
+																xs: '20px',
+																sm: '24px',
+															},
+														}}
+													/>
+												</IconButton>
+											</Grid>
+											<Grid item xxs={12} xs={12} sx={gridStyle}>
+												<Typography
+													variant='dataDepartment'
+													color='blacky.main'
+												>
+													PV Panel Datasheet
+												</Typography>
+												<IconButton
+													sx={{
+														py: 0,
+														color: 'secondary.main',
+													}}
+													href='https://drive.google.com/file/d/1n062ERM91ZVwCC4tC17eulkaprrZm3_R/view?usp=sharing'
+													target='_blank'
+												>
+													<DownloadIcon
 														sx={{
 															fontSize: {
 																xxs: '16px',
