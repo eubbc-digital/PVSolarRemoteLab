@@ -127,7 +127,7 @@ export default function Home() {
 					>
 						<CardMedia
 							sx={{
-								height: 'calc(100vh - 160px)',
+								height: 'calc(100vh - 100px)',
 								width: '100%',
 								objectFit: 'cover',
 							}}
@@ -157,6 +157,7 @@ export default function Home() {
 									display: 'flex',
 									flexDirection: 'column',
 									justifyContent: 'center',
+									paddingTop: '32px',
 								}}
 							>
 								<Grid
