@@ -114,7 +114,7 @@ export default function Home() {
 
 			<Card
 				sx={{
-					height: '100vh',
+					height: 'calc(100vh - 160px)',
 					width: '100%',
 					borderRadius: 0,
 				}}
@@ -127,7 +127,7 @@ export default function Home() {
 					>
 						<CardMedia
 							sx={{
-								height: '100vh',
+								height: 'calc(100vh - 160px)',
 								width: '100%',
 								objectFit: 'cover',
 							}}

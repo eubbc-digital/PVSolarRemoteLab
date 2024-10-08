@@ -324,27 +324,27 @@ const theme = createTheme({
 		headerHome: {
 			fontFamily: 'Lato',
 			fontWeight: 700,
-			fontSize: '1.8rem',
+			fontSize: '1.6rem',
 			'@media (min-width:200px)': {
-				fontSize: '1.8rem',
+				fontSize: '1.7rem',
 			},
 			'@media (min-width:338px)': {
 				fontSize: '1.9rem',
 			},
 			'@media (min-width:372px)': {
-				fontSize: '2.1rem',
+				fontSize: '2.0rem',
 			},
 			'@media (min-width:538px)': {
-				fontSize: '2.3rem',
+				fontSize: '2.2rem',
 			},
 			'@media (min-width:664px)': {
-				fontSize: '2.5rem',
+				fontSize: '2.4rem',
 			},
 			'@media (min-width:900px)': {
-				fontSize: '2.7rem',
+				fontSize: '2.8rem',
 			},
 			'@media (min-width:1100px)': {
-				fontSize: '3.2rem',
+				fontSize: '2.9rem',
 			},
 		},
 		buttonsHome: {
