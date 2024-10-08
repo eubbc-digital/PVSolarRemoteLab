@@ -45,6 +45,11 @@ export default async function Post(req, res) {
 									email: email,
 								},
 							},
+							courses: {
+								connect: {
+									id: 11, //Join to Personal Course by Solar Lab - HOTFIX to all users can save experiments
+								},
+							},
 						},
 					});
 				}

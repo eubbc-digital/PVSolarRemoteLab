@@ -114,7 +114,7 @@ export default function Home() {
 
 			<Card
 				sx={{
-					height: 'calc(100vh - 160px)',
+					height: 'calc(100vh - 100px)',
 					width: '100%',
 					borderRadius: 0,
 				}}
