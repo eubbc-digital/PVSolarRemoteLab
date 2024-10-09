@@ -137,7 +137,7 @@ export default function Experiments() {
 		}
 	};
 	const loadStudentCourses = async () => {
-		const response = await fetch(`/solar-lab/api/courses/readfiltered`, {
+		const response = await fetch(`/solar-lab/api/courses/readfilteredsimple`, {
 			headers: {
 				'Content-Type': 'application/json',
 			},

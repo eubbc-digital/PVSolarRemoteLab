@@ -35,9 +35,25 @@ export default function ExperimentActions({
 			handleClose();
 		}
 	};
-	const openExperiment = () => {
-		setExperiment(params.row);
-		handleClose();
+
+	const loadExperiment = async () => {
+		const request = await fetch(`/solar-lab/api/experiments/readid`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+			body: JSON.stringify({ id: params.id }),
+		});
+		const response = await request.json();
+		if (!response.status) {
+			toast.error("'Something Went Wrong, Please Try Again Later'");
+		} else {
+			setExperiment(response.experiment);
+			handleClose();
+		}
+	};
+	const openExperiment = async () => {
+		await loadExperiment();
 	};
 	return (
 		<Box>

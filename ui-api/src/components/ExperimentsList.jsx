@@ -93,7 +93,7 @@ export default function ExperimentList({
 	};
 
 	const loadData = async () => {
-		const response = await fetch(`/solar-lab/api/experiments/read`, {
+		const response = await fetch(`/solar-lab/api/experiments/readSimple`, {
 			headers: {
 				'Content-Type': 'application/json',
 			},

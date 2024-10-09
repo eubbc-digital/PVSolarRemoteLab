@@ -55,7 +55,7 @@ export default function Courses() {
 	const loadCourses = async () => {
 		if (await isVerified()) {
 			const response = await fetch(
-				`/solar-lab/api/teacher/courses/readfiltered`,
+				`/solar-lab/api/teacher/courses/readfilteredsimple`,
 				{
 					headers: {
 						'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export default function Courses() {
 	};
 
 	const loadCourseStudents = async (id) => {
-		const response = await fetch(`/solar-lab/api/teacher/courses/read`, {
+		const response = await fetch(`/solar-lab/api/teacher/courses/readId`, {
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -237,19 +237,8 @@ export default function Courses() {
 		{
 			field: 'name',
 			headerName: 'Name',
-			width: 200,
+			width: 300,
 			valueGetter: (params) => params.row?.user?.name,
-		},
-
-		{
-			field: 'experiments',
-			headerName: 'Experiments',
-			width: 130,
-			valueGetter: (params) => {
-				return params.row.experiments.filter(
-					(experiment) => experiment.courseId == selectedCourse.id
-				).length;
-			},
 		},
 	];
 

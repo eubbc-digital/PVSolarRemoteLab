@@ -12,22 +12,10 @@ export default async function handler(req, res) {
 		try {
 			const courses = await db.Course.findMany({
 				where: {
-					teacherId: {
-						equals: req.body.email,
-					},
-				},
-				include: {
 					students: {
-						include: {
-							user: true,
-						},
-					},
-					requests: {
-						include: {
-							student: {
-								include: {
-									user: true,
-								},
+						some: {
+							userEmail: {
+								equals: req.body.email,
 							},
 						},
 					},

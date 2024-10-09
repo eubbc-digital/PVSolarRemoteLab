@@ -10,30 +10,31 @@ export const config = {
 export default async function handler(req, res) {
 	if (req.method === 'POST') {
 		try {
-			const courses = await db.Course.findMany({
+			const experiment = await db.Experiment.findFirst({
 				where: {
-					teacherId: {
-						equals: req.body.email,
-					},
+					id: req.body.id,
 				},
 				include: {
-					students: {
+					cityLabs: {
 						include: {
-							user: true,
-						},
-					},
-					requests: {
-						include: {
-							student: {
+							activities: {
 								include: {
-									user: true,
+									efficiencyCurve: {
+										include: {
+											efficiencyRecords: {
+												orderBy: {
+													voltage: 'desc',
+												},
+											},
+										},
+									},
 								},
 							},
 						},
 					},
 				},
 			});
-			return res.status(200).json({ courses: courses, status: true });
+			return res.status(200).json({ experiment: experiment, status: true });
 		} catch (error) {
 			console.log(error);
 			return res.status(400).json({ error: error.message, status: false });

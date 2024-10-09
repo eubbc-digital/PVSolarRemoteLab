@@ -1,12 +1,5 @@
 import db from '@/lib/db';
 
-export const config = {
-	api: {
-		responseLimit: false,
-		// responseLimit: '8mb',
-	},
-};
-
 export default async function handler(req, res) {
 	if (req.method === 'POST') {
 		try {
@@ -14,22 +7,6 @@ export default async function handler(req, res) {
 				where: {
 					teacherId: {
 						equals: req.body.email,
-					},
-				},
-				include: {
-					students: {
-						include: {
-							user: true,
-						},
-					},
-					requests: {
-						include: {
-							student: {
-								include: {
-									user: true,
-								},
-							},
-						},
 					},
 				},
 			});

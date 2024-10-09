@@ -114,16 +114,13 @@ export default function Teacherexperiments() {
 	};
 
 	const loadData = async () => {
-		const response = await fetch(
-			`/solar-lab/api/teacher/courses/readfiltered`,
-			{
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				method: 'POST',
-				body: JSON.stringify({ email: session.user.email }),
-			}
-		);
+		const response = await fetch(`/solar-lab/api/teacher/courses/read`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+			body: JSON.stringify({ email: session.user.email }),
+		});
 		const answer = await response.json();
 
 		if (!answer.status) {
@@ -137,12 +134,36 @@ export default function Teacherexperiments() {
 				if (answer.courses[0].students.length > 0) {
 					setSelectedStudentName(answer.courses[0].students[0].user.name);
 					setSelectedStudentEmail(answer.courses[0].students[0].user.email);
-					setExperiment(
-						answer.courses[0].students[0].experiments.filter(
-							(experiment) => experiment.courseId == courseId
-						)[0]
+					await loadStudentExperiment(
+						answer.courses[0].students[0].user.email,
+						courseId
 					);
 				}
+			}
+		}
+	};
+
+	const loadStudentExperiment = async (email, courseId) => {
+		var response;
+		response = await fetch(`/solar-lab/api/experiments/readFirst`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+			body: JSON.stringify({
+				email: email,
+				courseId: courseId,
+			}),
+		});
+
+		const answer = await response.json();
+		if (!answer.status) {
+			toast.error('Something Went Wrong, Please Try Again');
+		} else {
+			if (answer.experiment) {
+				setExperiment(answer.experiment);
+			} else {
+				setExperiment(undefined);
 			}
 		}
 	};
@@ -164,19 +185,7 @@ export default function Teacherexperiments() {
 		courseStudents.forEach((student) => {
 			if (student.user.name == event.target.value) {
 				setSelectedStudentEmail(student.userEmail);
-				if (
-					student.experiments.some(
-						(experiment) => experiment.courseId == selectedCourse
-					)
-				) {
-					setExperiment(
-						student.experiments.filter(
-							(experiment) => experiment.courseId == selectedCourse
-						)[0]
-					);
-				} else {
-					setExperiment(undefined);
-				}
+				loadStudentExperiment(student.userEmail, selectedCourse);
 			}
 		});
 	};

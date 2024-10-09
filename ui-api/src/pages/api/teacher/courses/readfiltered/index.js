@@ -1,12 +1,5 @@
 import db from '@/lib/db';
 
-export const config = {
-	api: {
-		responseLimit: false,
-		// responseLimit: '8mb',
-	},
-};
-
 export default async function handler(req, res) {
 	if (req.method === 'POST') {
 		try {

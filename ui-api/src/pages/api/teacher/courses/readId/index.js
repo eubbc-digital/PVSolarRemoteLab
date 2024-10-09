@@ -1,20 +1,11 @@
 import db from '@/lib/db';
 
-export const config = {
-	api: {
-		responseLimit: false,
-		// responseLimit: '8mb',
-	},
-};
-
 export default async function handler(req, res) {
 	if (req.method === 'POST') {
 		try {
-			const courses = await db.Course.findMany({
+			const course = await db.Course.findFirst({
 				where: {
-					teacherId: {
-						equals: req.body.email,
-					},
+					id: req.body.id,
 				},
 				include: {
 					students: {
@@ -22,18 +13,9 @@ export default async function handler(req, res) {
 							user: true,
 						},
 					},
-					requests: {
-						include: {
-							student: {
-								include: {
-									user: true,
-								},
-							},
-						},
-					},
 				},
 			});
-			return res.status(200).json({ courses: courses, status: true });
+			return res.status(200).json({ course: course, status: true });
 		} catch (error) {
 			console.log(error);
 			return res.status(400).json({ error: error.message, status: false });
