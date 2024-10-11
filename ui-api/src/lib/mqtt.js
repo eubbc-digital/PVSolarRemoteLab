@@ -11,6 +11,8 @@ import socket from './socket';
 const connectMqtt = () => {
 	const client = mqtt.connect(process.env.MQTT_BROKER_HOST, {
 		clientId: 'SolarLab',
+		username: process.env.MQTT_USER,
+		password: process.env.MQTT_PASSWORD,
 	});
 	client.on('connect', function () {
 		mqttClient.subscribe('solarlab/server');

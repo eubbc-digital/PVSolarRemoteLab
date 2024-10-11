@@ -1,18 +1,5 @@
 version: "3.9"
 services:
-  broker:
-    image: eclipse-mosquitto
-    container_name: "SolarLab_Broker"
-    user: root
-    ports:
-      - ${MQTT_PORT}:${MQTT_PORT}
-    volumes:
-      - ./Broker/mosquitto.conf:/mosquitto/config/mosquitto.conf
-    restart: always
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "3"
   database:
     image: mysql
     container_name: "SolarLab_Database"
