@@ -368,7 +368,7 @@ export default function CoursesDialog({ open, handleClose, user }) {
 								<ErrorOutlineIcon
 									sx={{
 										fontSize: { xxs: '32px', xs: '48px', sm: '64px' },
-										color: 'warning.main',
+										color: 'info.main',
 									}}
 								/>
 							</Grid>
@@ -490,7 +490,7 @@ export default function CoursesDialog({ open, handleClose, user }) {
 							<ErrorOutlineIcon
 								sx={{
 									fontSize: { xxs: '32px', xs: '48px', sm: '64px' },
-									color: 'warning.main',
+									color: 'info.main',
 								}}
 							/>
 						</Grid>

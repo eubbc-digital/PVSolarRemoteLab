@@ -73,7 +73,7 @@ export default function Verifyemail() {
 						<HourglassBottomIcon
 							sx={{
 								fontSize: { xxs: '48px', xs: '64px', sm: '72px' },
-								color: 'warning.main',
+								color: 'info.main',
 							}}
 						/>
 					</Grid>
@@ -88,7 +88,7 @@ export default function Verifyemail() {
 						}}
 						justifyContent='center'
 					>
-						<Typography variant='header2' color='blacky.main'>
+						<Typography variant='header2' color='info.main'>
 							Loading...
 						</Typography>
 					</Grid>
@@ -119,7 +119,7 @@ export default function Verifyemail() {
 						<ErrorOutlineIcon
 							sx={{
 								fontSize: { xxs: '48px', xs: '64px', sm: '72px' },
-								color: 'warning.main',
+								color: 'info.main',
 							}}
 						/>
 					</Grid>
@@ -134,7 +134,7 @@ export default function Verifyemail() {
 						}}
 						justifyContent='center'
 					>
-						<Typography variant='header2' color='blacky.main'>
+						<Typography variant='header2' color='info.main'>
 							{message}
 						</Typography>
 					</Grid>

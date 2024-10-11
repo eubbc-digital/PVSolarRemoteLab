@@ -636,7 +636,7 @@ export default function Courses() {
 												<ErrorOutlineIcon
 													sx={{
 														fontSize: { xxs: '32px', xs: '48px', sm: '64px' },
-														color: 'warning.main',
+														color: 'info.main',
 													}}
 												/>
 											</Grid>
@@ -651,7 +651,7 @@ export default function Courses() {
 												}}
 												justifyContent='center'
 											>
-												<Typography variant='header3' color='blacky.main'>
+												<Typography variant='header3' color='info.main'>
 													There are no Students in this Course
 												</Typography>
 											</Grid>
@@ -764,7 +764,7 @@ export default function Courses() {
 												<ErrorOutlineIcon
 													sx={{
 														fontSize: { xxs: '32px', xs: '48px', sm: '64px' },
-														color: 'warning.main',
+														color: 'info.main',
 													}}
 												/>
 											</Grid>
@@ -779,7 +779,7 @@ export default function Courses() {
 												}}
 												justifyContent='center'
 											>
-												<Typography variant='header3' color='blacky.main'>
+												<Typography variant='header3' color='info.main'>
 													There are no Join Requests in this Course
 												</Typography>
 											</Grid>

@@ -680,7 +680,7 @@ export default function Teacherexperiments() {
 													<ErrorOutlineIcon
 														sx={{
 															fontSize: { xxs: '32px', xs: '48px', sm: '64px' },
-															color: 'warning.main',
+															color: 'info.main',
 														}}
 													/>
 												</Grid>
@@ -695,7 +695,7 @@ export default function Teacherexperiments() {
 													}}
 													justifyContent='center'
 												>
-													<Typography variant='header3' color='blacky.main'>
+													<Typography variant='header3' color='info.main'>
 														No Data in the Selected Activity
 													</Typography>
 												</Grid>
@@ -718,7 +718,7 @@ export default function Teacherexperiments() {
 										<ErrorOutlineIcon
 											sx={{
 												fontSize: { xxs: '32px', xs: '48px', sm: '64px' },
-												color: 'warning.main',
+												color: 'info.main',
 											}}
 										/>
 									</Grid>
@@ -733,7 +733,7 @@ export default function Teacherexperiments() {
 										}}
 										justifyContent='center'
 									>
-										<Typography variant='header3' color='blacky.main'>
+										<Typography variant='header3' color='info.main'>
 											This Student has not done any Experiment yet
 										</Typography>
 									</Grid>
