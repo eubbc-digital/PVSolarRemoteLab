@@ -3,8 +3,12 @@
 # MIT License - See LICENSE file in the root directory
 # Andres Gamboa, Alex Villazon
 
-i2c = SoftI2C(scl=Pin(22), sda=Pin(21), freq=800000)
-adc = ads1x15.ADS1115(i2c, addr, gain)
+try:
+    i2c = SoftI2C(scl=Pin(22), sda=Pin(21), freq=800000)
+    adc = ads1x15.ADS1115(i2c, addr, gain)
+except Exception as e:
+    print(e)
+    restart_and_reconnect()
 
 
 def sub_cb(topic, msg):
@@ -18,14 +22,14 @@ def sub_cb(topic, msg):
             action = received_msg['action']
             print(action)
             if topic == topic_sub and action == 'START':
-                time.sleep(0.5)
+                time.sleep(0.3)
                 relayDischarge.value(1)
-                time.sleep(1.5)
+                time.sleep(1)
                 relayDischarge.value(0)
-                time.sleep(0.5)
+                time.sleep(0.3)
                 relayPanelPositive.value(1)
                 relayGND.value(1)
-                time.sleep(0.5)
+                time.sleep(0.3)
                 relayCharge.value(1)
                 getExperimentData()
                 print("Sent")
@@ -33,7 +37,7 @@ def sub_cb(topic, msg):
                 relayPanelPositive.value(0)
                 relayGND.value(0)
                 relayDischarge.value(1)
-                time.sleep(3)
+                time.sleep(2)
                 relayDischarge.value(0)
                 print("Test Finished")
         except Exception as e:
@@ -116,7 +120,7 @@ def connect_and_subscribe():
 
 
 def restart_and_reconnect():
-    print('Failed to connect to MQTT broker. Restarting...')
+    print('Error Ocurred. Restarting...')
     time.sleep(2)
     machine.reset()
 
@@ -124,7 +128,7 @@ def restart_and_reconnect():
 # MQTT Connection
 try:
     client = connect_and_subscribe()
-except OSError as e:
+except Exception as e:
     print(e)
     restart_and_reconnect()
 
@@ -133,6 +137,6 @@ while True:
         client.check_msg()
         time.sleep(0.8)
 
-    except OSError as e:
+    except Exception as e:
         print(e)
         restart_and_reconnect()

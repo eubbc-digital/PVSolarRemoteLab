@@ -54,8 +54,8 @@ export default function Home() {
 				window.localStorage.setItem(
 					'SESSION_DATA',
 					JSON.stringify({
-						start_date: '10/10/2023',
-						end_date: '12/12/2024',
+						start_date: '12/12/2024',
+						end_date: '12/12/2028',
 						isPrivate: true,
 					})
 				);

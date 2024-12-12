@@ -19,21 +19,19 @@ esp.osdebug(None)
 gc.collect()
 
 # MQTT
-# mqtt_server = '192.168.46.161'
-mqtt_server = 'research.upb.edu'
-# mqtt_server = '192.168.100.7'
+mqtt_server = 'eubbc-digital.upb.edu'
+port = 1884
+username = "upb"
+mqtt_password = "QgsASHU([u<8TF_k2]>`6q"
+
 client_id = ubinascii.hexlify(machine.unique_id())
-port = 61883
-client = MQTTClient(client_id, mqtt_server, port)
+client = MQTTClient(client_id, mqtt_server, port,
+                    user=username, password=mqtt_password)
 
 relayPositiveA = machine.Pin(5, machine.Pin.OUT)
 relayNegativeB = machine.Pin(4, machine.Pin.OUT)
 relayNegativeA = machine.Pin(2, machine.Pin.OUT)
 relayPositiveB = machine.Pin(15, machine.Pin.OUT)
-# relayPositiveA = machine.Pin(21, machine.Pin.OUT)
-# relayNegativeB = machine.Pin(22, machine.Pin.OUT)
-# relayNegativeA = machine.Pin(19, machine.Pin.OUT)
-# relayPositiveB = machine.Pin(23, machine.Pin.OUT)
 
 relayPositiveA.value(0)
 relayNegativeB.value(0)
@@ -44,11 +42,20 @@ relayPositiveB.value(0)
 topic_sub = b'solarlab/esp32/scz'
 topic_pub = b'solarlab/server'
 # City
+# city = "Cochabamba"
+# dataloggerIP = '10.1.1.53'
+
+# city = "La Paz"
+# dataloggerIP = '192.168.50.18'
+
 city = "Santa Cruz"
 dataloggerIP = '10.1.3.29'
 
-ssid = 'UPB'
-password = ''
+ssid = 'LabSolar'
+password = 'lab20231'
+
+# ssid = 'UPB'
+# password = ''
 
 station = network.WLAN(network.STA_IF)
 station.active(True)

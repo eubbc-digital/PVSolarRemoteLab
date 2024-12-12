@@ -40,10 +40,15 @@ addr = 72
 gain = 2
 
 # MQTT
-mqtt_server = 'research.upb.edu'
+# mqtt_server = "eubbc-digital.upb.edu"
+mqtt_server = 'eubbc-digital.upb.edu'
+port = 1884
+username = "upb"
+mqtt_password = "QgsASHU([u<8TF_k2]>`6q"
+
 client_id = ubinascii.hexlify(machine.unique_id())
-port = 61883
-client = MQTTClient(client_id, mqtt_server, port)
+client = MQTTClient(client_id, mqtt_server, port,
+                    user=username, password=mqtt_password)
 
 # Topics
 topic_sub = b'solarlab/esp32/scz'
@@ -51,8 +56,11 @@ topic_pub = b'solarlab/server'
 # City
 city = "Santa Cruz"
 
-ssid = 'UPB'
-password = ''
+# ssid = 'UPB'
+# password = ''
+
+ssid = 'LabSolar'
+password = 'lab20231'
 
 
 station = network.WLAN(network.STA_IF)

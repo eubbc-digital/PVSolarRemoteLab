@@ -77,7 +77,7 @@ def get_datalogger_data():
         return []
 
 
-def sendData(dataToSend, efficiencyTest):
+def sendData(dataToSend, efficiencyTest, isMoving):
     if len(efficiencyTest) > 0:
         isTesting = True
     else:
@@ -92,7 +92,8 @@ def sendData(dataToSend, efficiencyTest):
         "radiation": round(dataToSend[3], 2),
         "panelangle": int(dataToSend[2]),
         "efficiencyTest": efficiencyTest,
-        "isTesting": isTesting
+        "isTesting": isTesting,
+        "isMoving": isMoving
     }
     message = json.dumps(msg)
     client.publish(topic_pub, str(message))
@@ -131,7 +132,7 @@ def sub_cb(topic, msg):
                 movingUp = False
                 movingDown = False
                 notMovingCount = 0
-                while abs(int(newAngle) - currentAngle) >= 0.6:
+                while abs(int(newAngle) - currentAngle) >= 0.8:
                     previousAngle = currentAngle
                     if int(newAngle) > currentAngle:
                         movingDown = False
@@ -143,10 +144,10 @@ def sub_cb(topic, msg):
                         if (not movingDown):
                             moveDown()
                             movingDown = True
-                    sleep(0.1)
+                    sleep(0.3)
                     dataloggerData = waitData()
                     currentAngle = dataloggerData[2]
-                    sendData(dataloggerData, [])
+                    sendData(dataloggerData, [], True)
                     print("Current: ", str(currentAngle))
                     print("Previous", str(previousAngle))
                     if (abs(currentAngle - previousAngle) < 0.3):
@@ -156,10 +157,10 @@ def sub_cb(topic, msg):
                             break
                     else:
                         notMovingCount = 0
-                        if abs(int(newAngle) - currentAngle) <= 0.6:
+                        if abs(int(newAngle) - currentAngle) <= 0.8:
                             print("END", str(currentAngle))
                             turnOff()
-                            sleep(3)
+                            sleep(2.5)
                             currentAngle = waitData()[2]
                 turnOff()
                 print("Moved To: ", str(currentAngle))
@@ -183,7 +184,7 @@ def connect_and_subscribe():
 
 
 def restart_and_reconnect():
-    print('Failed to connect to MQTT broker. Restarting...')
+    print('Error Ocurred. Restarting...')
     sleep(0.5)
     machine.reset()
 
@@ -191,15 +192,15 @@ def restart_and_reconnect():
 # MQTT Connection
 try:
     client = connect_and_subscribe()
-except OSError as e:
+except Exception as e:
     restart_and_reconnect()
 
 while True:
     try:
         client.check_msg()
-        sendData(waitData(), [])
+        sendData(waitData(), [], False)
         sleep(1)
 
-    except OSError as e:
+    except Exception as e:
         print(e)
         restart_and_reconnect()
