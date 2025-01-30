@@ -20,6 +20,7 @@ config();
 const lato = Lato({
 	subsets: ['latin'],
 	weight: ['300', '400', '700'],
+	display: 'swap',
 });
 
 export default function App({ Component, pageProps }) {

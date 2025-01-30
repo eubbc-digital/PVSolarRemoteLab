@@ -65,6 +65,7 @@ export default function Laboratory() {
 
 	const [selectedCities, setSelectedCities] = React.useState(['Cochabamba']);
 	const cities = ['Cochabamba', 'La Paz', 'Santa Cruz'];
+	const disabledCities = ['La Paz'];
 
 	const [isMobile, setIsMobile] = useState(false);
 
@@ -264,6 +265,7 @@ export default function Laboratory() {
 													<Checkbox
 														sx={checkBoxStyle}
 														checked={selectedCities.includes(city)}
+														disabled={disabledCities.includes(city)} // Deshabilita el checkbox si la ciudad está en disabledCities
 													/>
 												}
 												name={city}
@@ -313,6 +315,7 @@ export default function Laboratory() {
 													<Checkbox
 														sx={checkBoxStyle}
 														checked={selectedCities.includes(city)}
+														disabled={disabledCities.includes(city)} // D
 													/>
 													<ListItemText primary={city} />
 												</MenuItem>
