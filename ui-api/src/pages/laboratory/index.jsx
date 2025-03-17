@@ -65,7 +65,7 @@ export default function Laboratory() {
 
 	const [selectedCities, setSelectedCities] = React.useState(['Cochabamba']);
 	const cities = ['Cochabamba', 'La Paz', 'Santa Cruz'];
-	const disabledCities = ['La Paz'];
+	const disabledCities = [];
 
 	const [isMobile, setIsMobile] = useState(false);
 
