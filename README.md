@@ -112,6 +112,25 @@ If you don't use, Nginx you should use the command to stop the services:
 
 - Andres Gamboa (Universidad Privada Boliviana - UPB)
 - Alex Villazon (Universidad Privada Boliviana - UPB)
+- Alfredo Meneses (Universidad Privada Boliviana - UPB)
+- Boris Pedraza (Universidad Privada Boliviana - UPB)
+
+## Publications
+
+- Andrés Gamboa, Alex Villazón, Alfredo Meneses, Omar Ormachea, and
+  Renán Orellana. Altitude’s Impact on Photovoltaic Efficiency: An IoT-
+  Enabled Geographically Distributed Remote Laboratory. In M. E. Auer,
+  R. Langmann, D. May, and K. Roos, editors, Smart Technologies for a Sus-
+  tainable Future, pages 133–144, Cham, 2024. Springer Nature Switzerland.
+  doi: 10.1007/978-3-031-61905-2 14.
+
+- Thomas Zimmer, Andres Gamboa, Fabrice Mauvy, Alex Villazón, and Omar
+  Ormachea. Remote Photovoltaic Laboratories: Bridging Continents for
+  Hands‐On Solar Module Characterization.
+
+## Awards
+
+- GOLC (Global Online Laboratory Consortium) Award 2024.
 
 ## Acknowledgments
 
